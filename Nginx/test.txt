@@ -1,0 +1,8 @@
+server {
+	listen       80;  //Nginx监听 80端口
+	server_name  www.123.com;  //访问域名为www.123.com 不加端口号时默认为 80端口
+
+	location ~ /test/ {   //反代path 
+		proxy_pass  http://127.0.0.1:8080 //反代域名
+	}
+}
