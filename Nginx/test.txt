@@ -3,6 +3,10 @@ server {
 	server_name  www.123.com;  //访问域名为www.123.com 不加端口号时默认为 80端口
 
 	location ~ /test/ {   //反代path 
+		root   /www/www;   #网站根目录
+		index  index.html index.htm;  #默认首页类型
 		proxy_pass  http://127.0.0.1:8080 //反代域名
+            	deny 192.168.2.11;   #禁止访问的ip地址，可以为all
+		allow 192.168.3.44； #允许访问的ip地址，可以为all
 	}
 }
