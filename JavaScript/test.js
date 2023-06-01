@@ -26,8 +26,8 @@ let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let userList = [];
 let userIdx = 0;
 let userCount = 0;
-let scriptVersionLatest = '0.0.1'; //最新版本
-let scriptVersionNow = '0.0.1'; //现在版本
+let scriptVersionLatest; //最新版本
+let scriptVersionNow = "0.0.1"; //现在版本
 //---------------------- 自定义变量区域 -----------------------------------
 //---------------------------------------------------------
 
