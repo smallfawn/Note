@@ -27,12 +27,12 @@ let userList = [];
 let userIdx = 0;
 let userCount = 0;
 let scriptVersionLatest; //最新版本
-let scriptVersionNow = "0.0.1"; //现在版本
+let scriptVersionNow = '0.0.1'; //现在版本
 //---------------------- 自定义变量区域 -----------------------------------
 //---------------------------------------------------------
 
 async function start() {
-    await getVersion('smallfawn/Note@main/JavaScript/test.js')
+    await getVersion('smallfawn/Note/main/JavaScript/test.js')
     log(`\n============ 当前版本：${scriptVersionNow}  最新版本：${scriptVersionLatest} ============`)
     await notice()
     console.log('\n================== 用户信息 ==================\n');
@@ -153,11 +153,33 @@ function httpRequest(options, method) {
 function getVersion(scriptUrl, timeout = 3 * 1000) {
     return new Promise((resolve) => {
         let url = {
-            url: `https://fastly.jsdelivr.net/gh/${scriptUrl}`,
+            url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}`,//smallfawn/Note/main/JavaScript/test.js
+            //`https://fastly.jsdelivr.net/gh/${scriptUrl}`,'smallfawn/Note@main/JavaScript/test.js'
         }
         $.get(url, async (err, resp, data) => {
             try {
-                scriptVersionLatest = data.match(/scriptVersionLatest = "([\d\.]+)"/)[1]
+                scriptVersionLatest = data.match(/scriptVersionNow = "([\d\.]+)"/)[1]
+                //let regex = /let scriptVersionNow\s*=\s*"(\d+\.\d+\.\d+)"/;
+                //console.log(data.match(regex)[1])
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve()
+            }
+        }, timeout)
+    })
+}
+function getNotice(scriptUrl, timeout = 3 * 1000) {
+    return new Promise((resolve) => {
+        let url = {
+            url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}`,
+            //`https://fastly.jsdelivr.net/gh/${scriptUrl}`,
+        }
+        $.get(url, async (err, resp, data) => {
+            try {
+                scriptVersionLatest = data.match(/scriptVersionNow = "([\d\.]+)"/)[1]
+                //let regex = /let scriptVersionNow\s*=\s*"(\d+\.\d+\.\d+)"/;
+                //console.log(data.match(regex)[1])
             } catch (e) {
                 $.logErr(e, resp);
             } finally {
