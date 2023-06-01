@@ -14,24 +14,26 @@
 
 
 
-const $ = new Env("演示模板");
-const ckName = "demo_data";
+const $ = new Env("test测试模板");
+const ckName = "test";
 //-------------------- 一般不动变量区域 -------------------------------------
+const { log } = require('console')
 const Notify = 1;         //0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
-let debug = 1;           //Debug调试   0关闭  1开启
 let envSplitor = ["@", "\n"]; //多账号分隔符
-let ck = msg = '';       //let ck,msg
-let host, hostname;
+let msg = '';
 let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let userList = [];
 let userIdx = 0;
 let userCount = 0;
+let scriptVersionLatest = '0.0.1'; //最新版本
+let scriptVersionNow = '0.0.1'; //现在版本
 //---------------------- 自定义变量区域 -----------------------------------
 //---------------------------------------------------------
 
 async function start() {
-
+    await getVersion('smallfawn/Note@main/JavaScript/test.js')
+    log(`\n============ 当前版本：${scriptVersionNow}  最新版本：${scriptVersionLatest} ============`)
     await notice()
     console.log('\n================== 用户信息 ==================\n');
     taskall = [];
@@ -65,9 +67,8 @@ class UserInfo {
             let options = {
                 url: `${this.hostname}/get.php`,
                 headers: {}
-            }
+            }, result = await httpRequest(options);
             //console.log(options);
-            let result = await httpRequest(options);
             //console.log(result);
             if (result.errcode == 0) {
                 DoubleLog(`账号[${this.index}]  欢迎用户: ${result.errcode}`);
@@ -76,7 +77,6 @@ class UserInfo {
             } else {
                 DoubleLog(`账号[${this.index}]  用户查询:失败 ❌ 了呢,原因未知！`);
                 this.ckStatus = false
-
                 //console.log(result);
             }
         } catch (e) {
@@ -145,6 +145,25 @@ function httpRequest(options, method) {
                 resolve();
             }
         })
+    })
+}
+/**
+ * 获取远程版本
+ */
+function getVersion(scriptUrl, timeout = 3 * 1000) {
+    return new Promise((resolve) => {
+        let url = {
+            url: `https://fastly.jsdelivr.net/gh/${scriptUrl}`,
+        }
+        $.get(url, async (err, resp, data) => {
+            try {
+                scriptVersionLatest = data.match(/scriptVersionLatest = "([\d\.]+)"/)[1]
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve()
+            }
+        }, timeout)
     })
 }
 async function notice() {
