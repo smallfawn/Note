@@ -120,10 +120,7 @@ async function checkEnv() {
 }
 /////////////////////////////////////////////////////////////////////////////////////
 function httpRequest(options, method) {
-    if ('method' in options) {
-        method = options.method
-        method = method.toLowerCase()
-    } else { typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method }
+    method = options.method ? options.method.toLowerCase() : (options.body ? 'post' : 'get');
     return new Promise((resolve) => {
         $[method](options, (err, resp, data) => {
             try {
