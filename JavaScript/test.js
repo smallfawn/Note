@@ -35,14 +35,19 @@ async function start() {
     await getVersion('smallfawn/Note/main/JavaScript/test.js')
     log(`\n============ 当前版本：${scriptVersionNow}  最新版本：${scriptVersionLatest} ============`)
     await getNotice()
-    console.log('\n================== 用户信息 ==================\n');
-    taskall = [];
+    //log('\n================== 用户信息 ==================\n');
+    /*taskall = [];
     for (let user of userList) {
         if (user.ckStatus) {
             taskall.push(await user.user_info());
             await $.wait(1000); //延迟  1秒  可充分利用 $.环境函数
         }
     }
+    await Promise.all(taskall);*/
+    log('\n================== 用户信息 ==================\n')
+    taskall = userList
+        .filter(user => user.ckStatus)
+        .map(user => user.user_info().then(() => $.wait(1000)))
     await Promise.all(taskall);
 
 
