@@ -48,7 +48,7 @@ async function start() {
     log('\n================== 用户信息 ==================\n')
     taskall = userList
         .filter(user => user.ckStatus)
-        .map(user => user.user_info().then(() => $.wait(1000)))//注意then的位置 写user里面则会每次执行user_info都会调用 如果是外面则时所有user执行User_info完毕后才会调用
+        .map(user => user.user_info().then(() => $.wait(1000)))
     await Promise.all(taskall);
 
 
