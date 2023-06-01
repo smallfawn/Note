@@ -27,14 +27,14 @@ let userList = [];
 let userIdx = 0;
 let userCount = 0;
 let scriptVersionLatest; //最新版本
-let scriptVersionNow = `0.0.1`; //现在版本
+let scriptVersionNow = '0.0.1'; //现在版本
 //---------------------- 自定义变量区域 -----------------------------------
 //---------------------------------------------------------
 
 async function start() {
     await getVersion('smallfawn/Note/main/JavaScript/test.js')
     log(`\n============ 当前版本：${scriptVersionNow}  最新版本：${scriptVersionLatest} ============`)
-    await notice()
+    await getNotice()
     console.log('\n================== 用户信息 ==================\n');
     taskall = [];
     for (let user of userList) {
@@ -73,7 +73,6 @@ class UserInfo {
             if (result.errcode == 0) {
                 DoubleLog(`账号[${this.index}]  欢迎用户: ${result.errcode}`);
                 this.ckStatus = true
-
             } else {
                 DoubleLog(`账号[${this.index}]  用户查询:失败 ❌ 了呢,原因未知！`);
                 this.ckStatus = false
@@ -152,34 +151,14 @@ function httpRequest(options, method) {
  */
 function getVersion(scriptUrl, timeout = 3 * 1000) {
     return new Promise((resolve) => {
-        let url = {
-            url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}`,//smallfawn/Note/main/JavaScript/test.js
-            //`https://fastly.jsdelivr.net/gh/${scriptUrl}`,'smallfawn/Note@main/JavaScript/test.js'
-        }
-        $.get(url, async (err, resp, data) => {
-            try {
-                scriptVersionLatest = data.match(/scriptVersionNow = "([\d\.]+)"/)[1]
-                //let regex = /let scriptVersionNow\s*=\s*"(\d+\.\d+\.\d+)"/;
-                //console.log(data.match(regex)[1])
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve()
-            }
-        }, timeout)
-    })
-}
-function getNotice(scriptUrl, timeout = 3 * 1000) {
-    return new Promise((resolve) => {
-        let url = {
+        let options = {
             url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}`,
-            //`https://fastly.jsdelivr.net/gh/${scriptUrl}`,
         }
-        $.get(url, async (err, resp, data) => {
+        $.get(options, async (err, resp, data) => {
             try {
-                scriptVersionLatest = data.match(/scriptVersionNow = "([\d\.]+)"/)[1]
-                //let regex = /let scriptVersionNow\s*=\s*"(\d+\.\d+\.\d+)"/;
-                //console.log(data.match(regex)[1])
+                let regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
+                let match = data.match(regex);
+                scriptVersionLatest = match ? match[2] : '';
             } catch (e) {
                 $.logErr(e, resp);
             } finally {
@@ -188,28 +167,19 @@ function getNotice(scriptUrl, timeout = 3 * 1000) {
         }, timeout)
     })
 }
-async function notice() {
+
+async function getNotice() {
     try {
         let options = {
-            url: `https://ghproxy.com/https://raw.githubusercontent.com/smallfawn/api/main/notice.json`,
-            headers: {
-                'User-Agent': ''
-            },
+            url: `https://ghproxy.com/https://raw.githubusercontent.com/smallfawn/Note/main/Notice.json`,
+            headers: { 'User-Agent': '' },
+        }, result = await httpRequest(options);
+        if (!result || !('notice' in result)) {
+            options.url = `https://gitee.com/smallfawn/Note/raw/master/Notice.json`
+            result = await httpRequest(options);
         }
-        //console.log(options);
-        let result = await httpRequest(options);
-        //console.log(result);
-        if (result) {
-            if ('notice' in result) {
-                DoubleLog(`${result.notice}`);
-            } else {
-                options.url = `https://gitee.com/smallfawn/api/raw/master/notice.json`
-                result = await httpRequest(options);
-                if ('notice' in result) {
-                    DoubleLog(`${result.notice}`);
-                }
-            }
-        } else {
+        if (result && 'notice' in result) {
+            DoubleLog(`${result.notice}`);
         }
     } catch (e) {
         console.log(e);
@@ -220,10 +190,7 @@ async function hitokoto() { // 随机一言
         let options = {
             url: 'https://v1.hitokoto.cn/',
             headers: {}
-        };
-        //console.log(options);
-        let result = await httpRequest(options);
-        //console.log(result);
+        }, result = await httpRequest(options);
         return result.hitokoto
     } catch (error) {
         console.log(error);
