@@ -78,7 +78,7 @@ class UserInfo {
             //console.log(options);
             //console.log(result);
             if (result.errcode == 0) {
-                DoubleLog(`账号[${this.index}]  欢迎用户: ${result.errcode}`);
+                DoubleLog(`账号[${this.index}]  欢迎用户: ${result.errcode}🎉`);
                 this.ckStatus = true
             } else {
                 DoubleLog(`账号[${this.index}]  用户查询:失败 ❌ 了呢,原因未知！`);
