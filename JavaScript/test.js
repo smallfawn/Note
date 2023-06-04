@@ -33,7 +33,7 @@ let scriptVersionNow = '0.0.1'; //现在版本
 
 async function start() {
     await getVersion('smallfawn/Note/main/JavaScript/test.js')
-    log(`\n============ 当前版本：${scriptVersionNow}  最新版本：${scriptVersionLatest} ============`)
+    log(`\n============ 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ============`)
     await getNotice()
     let taskall
     //log('\n================== 用户信息 ==================\n');
