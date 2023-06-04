@@ -17,7 +17,8 @@
 const $ = new Env("test测试模板");
 const ckName = "test";
 //-------------------- 一般不动变量区域 -------------------------------------
-const { log } = require('console')
+const { log } = require('console');
+const { resolve } = require('path');
 const Notify = 1;         //0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
 let envSplitor = ["@", "\n"]; //多账号分隔符
@@ -188,13 +189,23 @@ async function getNotice() {
         console.log(e);
     }
 }
-async function hitokoto() { // 随机一言
+async function hitokoto(timeout = 3 * 1000) { // 随机一言
     try {
         let options = {
             url: 'https://v1.hitokoto.cn/',
             headers: {}
-        }, result = await httpRequest(options);
-        return result.hitokoto
+        }//, //result = await httpRequest(options);
+        $.get(options, async (err, resp, data) => {
+            try {
+                data = JSON.parse(data)
+                resolve(data.hitokoto)
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve()
+            }
+        }, timeout)
+        //return result.hitokoto
     } catch (error) {
         console.log(error);
     }
