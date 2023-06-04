@@ -18,7 +18,6 @@ const $ = new Env("test测试模板");
 const ckName = "test";
 //-------------------- 一般不动变量区域 -------------------------------------
 const { log } = require('console');
-const { resolve } = require('path');
 const Notify = 1;         //0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
 let envSplitor = ["@", "\n"]; //多账号分隔符
@@ -36,20 +35,15 @@ async function start() {
     await getVersion('smallfawn/Note/main/JavaScript/test.js')
     log(`\n============ 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ============`)
     await getNotice()
-    let taskall
-    //log('\n================== 用户信息 ==================\n');
-    /*taskall = [];
+
+    log('\n================== 用户信息 ==================\n');
+    let taskall = [];
     for (let user of userList) {
         if (user.ckStatus) {
             taskall.push(await user.user_info());
             await $.wait(1000); //延迟  1秒  可充分利用 $.环境函数
         }
     }
-    await Promise.all(taskall);*/
-    log('\n================== 用户信息 ==================\n')
-    taskall = userList
-        .filter(user => user.ckStatus)
-        .map(user => user.user_info().then(() => $.wait(1000)))
     await Promise.all(taskall);
 
 
@@ -190,25 +184,27 @@ async function getNotice() {
     }
 }
 async function hitokoto(timeout = 3 * 1000) { // 随机一言
-    try {
-        let options = {
-            url: 'https://v1.hitokoto.cn/',
-            headers: {}
-        }//, //result = await httpRequest(options);
-        $.get(options, async (err, resp, data) => {
-            try {
-                data = JSON.parse(data)
-                resolve(data.hitokoto)
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve()
-            }
-        }, timeout)
-        //return result.hitokoto
-    } catch (error) {
-        console.log(error);
-    }
+    return new Promise((resolve) => {
+        try {
+            let options = {
+                url: 'https://v1.hitokoto.cn/',
+                headers: {}
+            }//, //result = await httpRequest(options);
+            $.get(options, async (err, resp, data) => {
+                try {
+                    data = JSON.parse(data)
+                    resolve(data.hitokoto)
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            }, timeout)
+            //return result.hitokoto
+        } catch (error) {
+            console.log(error);
+        }
+    })
 }
 // 双平台log输出
 function DoubleLog(data) {
