@@ -129,7 +129,12 @@ function httpRequest(options, method) {
                     $.logErr(err);
                 } else {
                     if (data) {
-                        typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data
+                        //typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data
+                        try {
+                            data = JSON.parse(data);
+                        } catch (error) {
+                            //data = data
+                        }
                         resolve(data)
                     } else {
                         console.log(`请求api返回数据为空，请检查自身原因`)
