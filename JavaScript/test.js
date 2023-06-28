@@ -9,12 +9,13 @@
 
 const $ = new Env("test测试模板");
 const ckName = "test";
+
 const { log } = require('console');
-const Notify = 1;         //0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
+const Notify = 1;         //0为关闭通知,1为打开通知,默认为1
+let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let envSplitor = ["@", "\n"]; //多账号分隔符
 let msg = '';
-let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let userList = [];
 let userIdx = 0;
 let userCount = 0;
