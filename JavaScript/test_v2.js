@@ -11,10 +11,12 @@ const $ = new Env("test测试模板");
 const ckName = "test";
 const Notify = 1; //0为关闭通知,1为打开通知,默认为1
 let envSplitor = ["@", "\n"]; //多账号分隔符
+let strSplitor = '&'; //多变量分隔符
+
+let scriptVersionNow = "0.0.1";
 
 
 let msg = "";
-let scriptVersionNow = "0.0.1";
 
 
 async function start() {
@@ -35,7 +37,7 @@ async function start() {
 class UserInfo {
     constructor(str) {
         this.index = ++$.userIdx;
-        this.ck = str.split("&")[0]; //单账号多变量分隔符
+        this.ck = str.split(strSplitor)[0]; //单账号多变量分隔符
         this.host = "echo.apipost.cn";
         this.hostname = "https://" + this.host;
         this.ckStatus = true;
