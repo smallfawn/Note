@@ -83,7 +83,7 @@ class UserInfo {
  */
 async function checkEnv() {
     let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || "";
-    let userCount = 0;
+    //let userCount = 0;
     if (userCookie) {
         // console.log(userCookie);
         let e = envSplitor[0];
@@ -93,12 +93,12 @@ async function checkEnv() {
                 break;
             }
         for (let n of userCookie.split(e)) n && $.userList.push(new UserInfo(n));
-        userCount = $.userList.length;
+        //userCount = $.userList.length;
     } else {
         console.log("未找到CK");
         return;
     }
-    return console.log(`共找到${userCount}个账号`), true; //true == !0
+    return console.log(`共找到${$.userList.length}个账号`), true; //true == !0
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
