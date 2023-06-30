@@ -479,7 +479,7 @@ function Env(t, e) {
                     await notify.sendNotify(this.name, m)
                 } else {
                     this.msg(this.name, "", m);
-                    //console.log($.name, "", m)
+                    //console.log(this.name, "", m)
                 }
             } else {
                 console.log(m)
