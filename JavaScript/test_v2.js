@@ -18,7 +18,7 @@ let msg = "";
 
 
 async function start() {
-    await getVersion("smallfawn/Note/main/JavaScript/test.js");
+    await getVersion("smallfawn/Note/main/JavaScript/test_v2.js");
     await getNotice();
 
     console.log("\n================== 用户信息 ==================\n");
