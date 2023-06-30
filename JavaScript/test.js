@@ -186,7 +186,7 @@ async function getNotice() {
             }
         }
         if (notice) {
-            DoubleLog(notice);
+            $.DoubleLog(notice);
         }
     } catch (e) {
         console.log(e);
