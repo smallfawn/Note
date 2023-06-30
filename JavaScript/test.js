@@ -11,21 +11,21 @@ const ckName = "test";
 const Notify = 1; //0为关闭通知,1为打开通知,默认为1
 let envSplitor = ["@", "\n"]; //多账号分隔符
 
-const { log } = require("console");
 let msg = "";
 let userList = [];
 let userIdx = 0;
+
 let scriptVersionLatest;
 let scriptVersionNow = "0.0.1";
 
 async function start() {
     await getVersion("smallfawn/Note/main/JavaScript/test.js");
-    log(
+    console.log(
         `\n============ 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ============`
     );
     await getNotice();
 
-    log("\n================== 用户信息 ==================\n");
+    console.log("\n================== 用户信息 ==================\n");
     let taskall = [];
     for (let user of userList) {
         if (user.ckStatus) {
