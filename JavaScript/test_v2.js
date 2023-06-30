@@ -14,7 +14,7 @@ let envSplitor = ["@", "\n"]; //多账号分隔符
 
 
 let msg = "";
-//let scriptVersionNow = "0.0.1";
+let scriptVersionNow = "0.0.1";
 
 
 async function start() {
@@ -137,8 +137,7 @@ function getVersion(scriptUrl, timeout = 3 * 1000) {
             try {
                 let regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
                 let match = data.match(regex);
-                scriptVersionLatest = match ? match[2] : "";
-                let scriptVersionLatest;
+                let scriptVersionLatest = match ? match[2] : "";
                 console.log(`\n============ 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ============`);
             } catch (e) {
                 $.logErr(e, resp);
