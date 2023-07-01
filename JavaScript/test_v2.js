@@ -70,11 +70,8 @@ class UserInfo {
     if (!(await checkEnv())) return;
     if ($.userList.length > 0) {
         await start();
-    }
-    await $.SendMsg(msg);
-})()
-    .catch((e) => console.log(e))
-    .finally(() => $.done());
+    } await $.SendMsg(msg);
+})().catch((e) => console.log(e)).finally(() => $.done());
 
 //********************************************************
 /**
@@ -102,7 +99,7 @@ async function checkEnv() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
-function httpRequest(options, method) {
+function httpRequest(options, method = null) {
     method = options.method ? options.method.toLowerCase() : options.body ? "post" : "get";
     return new Promise((resolve) => {
         $[method](options, (err, resp, data) => {
