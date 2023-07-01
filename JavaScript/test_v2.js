@@ -103,26 +103,18 @@ function httpRequest(options, method = null) {
     method = options.method ? options.method.toLowerCase() : options.body ? "post" : "get";
     return new Promise((resolve) => {
         $[method](options, (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${method}请求失败`);
-                    $.logErr(err);
+            if (err) {
+                console.log(`${method}请求失败`);
+                $.logErr(err);
+            } else {
+                if (data) {
+                    try { data = JSON.parse(data); } catch (error) { }
+                    resolve(data);
                 } else {
-                    if (data) {
-                        try {
-                            data = JSON.parse(data);
-                        } catch (error) {
-                        }
-                        resolve(data);
-                    } else {
-                        console.log(`请求api返回数据为空，请检查自身原因`);
-                    }
+                    console.log(`请求api返回数据为空，请检查自身原因`);
                 }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve();
             }
+            resolve();
         });
     });
 }
@@ -131,18 +123,17 @@ function httpRequest(options, method = null) {
  */
 function getVersion(scriptUrl, timeout = 3 * 1000) {
     return new Promise((resolve) => {
-        let options = { url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}`, };
+        const options = { url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}` };
         $.get(options, (err, resp, data) => {
             try {
-                let regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
-                let match = data.match(regex);
-                let scriptVersionLatest = match ? match[2] : "";
+                const regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
+                const match = data.match(regex);
+                const scriptVersionLatest = match ? match[2] : "";
                 console.log(`\n============ 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ============`);
             } catch (e) {
                 $.logErr(e, resp);
-            } finally {
-                resolve();
             }
+            resolve();
         }, timeout);
     });
 }
