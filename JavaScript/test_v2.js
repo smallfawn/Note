@@ -1,5 +1,5 @@
 /**
- * APP
+ * new Env("test测试模板")
  * cron 5 15 * * *  test_v2.js
  * Show:
  * 变量名:
