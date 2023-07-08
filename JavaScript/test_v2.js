@@ -1,9 +1,9 @@
 /**
  * APP
+ * cron 5 15 * * *  test_v2.js
  * Show:
  * 变量名:
  * 变量值:
- * cron 10 7 * * *
  * scriptVersionNow = "0.0.1";
  */
 
