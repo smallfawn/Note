@@ -20,7 +20,7 @@ let msg = "";
 
 
 async function start() {
-    await getVersion("smallfawn/Note/main/JavaScript/test_v2.js");
+    await getVersion("smallfawn/Note@main/JavaScript/test_v2.js");
     await getNotice();
 
     console.log("\n================== 用户信息 ==================\n");
@@ -123,7 +123,7 @@ function httpRequest(options, method = null) {
  */
 function getVersion(scriptUrl, timeout = 3 * 1000) {
     return new Promise((resolve) => {
-        const options = { url: `https://ghproxy.com/https://raw.githubusercontent.com/${scriptUrl}` };
+        const options = { url: `https://cdn.jsdelivr.net/gh/${scriptUrl}` };
         $.get(options, (err, resp, data) => {
             try {
                 const regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
@@ -144,8 +144,9 @@ async function getNotice() {
     try {
         const urls = [
             "https://cdn.jsdelivr.net/gh/smallfawn/Note@main/Notice.json",
-            "https://ghproxy.com/https://raw.githubusercontent.com/smallfawn/Note/main/Notice.json",
             "https://fastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json",
+            "https://gcore.jsdelivr.net/gh/smallfawn/Note@main/Notice.json",
+            "https://ghproxy.com/https://raw.githubusercontent.com/smallfawn/Note/main/Notice.json",
             "https://gitee.com/smallfawn/Note/raw/master/Notice.json",
         ];
         let notice = null;
