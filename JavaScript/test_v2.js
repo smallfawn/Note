@@ -129,7 +129,7 @@ function getVersion(scriptUrl, timeout = 3 * 1000) {
                 const regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
                 const match = data.match(regex);
                 const scriptVersionLatest = match ? match[2] : "";
-                console.log(`\n============ 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ============`);
+                console.log(`\n====== 当前版本：${scriptVersionNow} 📌 最新版本：${scriptVersionLatest} ======`);
             } catch (e) {
                 $.logErr(e, resp);
             }
