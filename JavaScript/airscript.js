@@ -1,9 +1,9 @@
 const $ = Env("测试")
-let envVariable = `变量1&变量1.1@变量2&变量2.2@变量3&变量3.3`
-console.log(Application.Range('A1').Text) // A1单元格的内容
-let VariableList
+let userCookie = `变量1&变量1.1@变量2&变量2.2@变量3&变量3.3`
+let userList
+
 function task(i) {
-    let index = VariableList.indexOf(i);
+    let index = userList.indexOf(i);
     $.DoubleLog(`------ 开始第${index + 1}个账号 ------`)
     if (i.indexOf("&") !== -1) {
         let arr = i.split("&");
@@ -18,6 +18,7 @@ function task(i) {
     //任务2
     //任务3
 }
+
 function apipost() {
     let url = "https://echo.apipost.cn/get.php"
     let options = {
@@ -27,23 +28,6 @@ function apipost() {
     let result = $.httpRequest(url, options)
     $.DoubleLog(result)
 }
-main()
-function main() {
-    $.wait(5000)
-    $.start()
-    Notice()
-    VariableList = $.checkEnv()
-    if (Array.isArray(VariableList)) {
-        for (let i of VariableList) {
-            task(i)
-        }
-    } else {
-        task(VariableList)
-    }
-    $.sendNotify()
-    $.done()
-}
-
 function Notice() {
     let url = "https://fastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json"
     let options = {
@@ -52,6 +36,24 @@ function Notice() {
     }
     let result = $.httpRequest(url, options)
     $.DoubleLog(result.notice)
+}
+
+main()
+function main() {
+    $.wait(5000)
+    $.start()
+    Notice()
+    userList = $.checkEnv()
+    if (Array.isArray(userList)) {
+        for (let i of userList) {
+            task(i)
+        }
+    } else {
+        task(userList)
+    }
+    //userList = Array.isArray(userList) ? userList.forEach(task) : task(userList)
+    $.sendNotify()
+    $.done()
 }
 
 // Env for wps AirScript(JavaScript)
@@ -74,17 +76,20 @@ function Env(name) {
         this.DoubleLog(`🔔${this.name}, 开始! 🕛`)
     }
     env.checkEnv = function () {
-        if (envVariable == "" || envVariable == undefined || envVariable == null) {
-            return console.log("环境变量为空")
-        }
-        if (envVariable.indexOf("@") !== -1) {
-            var str = envVariable;
-            var arr = str.split("@");
-            console.log(arr);
-            return arr
+        if (userCookie && userCookie.indexOf("@") !== -1) {
+            return userCookie.split("@");
+        } else if (userCookie) {
+            return userCookie;
         } else {
-            return envVariable
+            console.log("环境变量为空");
         }
+    }
+    //比如A1 那么就输出A1表格的内容
+    env.getData = function (Range) {
+        return Application.Range(Range).Text
+    }
+    env.setDate = function (Range, Value) {
+        return Application.Range(Range).Value = Value
     }
     env.httpRequest = function (url, options) {
         return HTTP.fetch(url, options).json();
