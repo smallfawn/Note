@@ -1,5 +1,6 @@
 const $ = Env("测试")
 let envVariable = `变量1&变量1.1@变量2&变量2.2@变量3&变量3.3`
+console.log(Application.Range('A1').Text) // A1单元格的内容
 let VariableList
 function task(i) {
     let index = VariableList.indexOf(i);
