@@ -1,22 +1,40 @@
 const $ = Env("测试")
-
-let envVariable = `变量1@变量2@变量3`
+let envVariable = `变量1&变量1.1@变量2&变量2.2@变量3&变量3.3`
+let VariableList
+function task(i) {
+    let index = VariableList.indexOf(i);
+    $.DoubleLog(`------ 开始第${index + 1}个账号 ------`)
+    let arr = i.split("&");
+    console.log(`账号一的参数${arr[0]}`);
+    console.log(`账号一的参数${arr[1]}`);
+    //初始化变量
+    let token = ""
+    //执行代码
+    //任务1
+    apipost(i)//测试
+    //任务2
+    //任务3
+}
+function apipost() {
+    let url = "https://echo.apipost.cn/get.php"
+    let options = {
+        method: "GET",
+        headers: {},
+    }
+    let result = $.httpRequest(url, options)
+    $.DoubleLog(result)
+}
 main()
-
 function main() {
     $.wait(5000)
     $.start()
-    let VariableList = $.checkEnv()
+    Notice()
+    VariableList = $.checkEnv()
     for (let i of VariableList) {
         task(i)
     }
-    Notice()
     $.sendNotify()
     $.done()
-}
-
-function task() {
-    //执行代码
 }
 
 function Notice() {
@@ -28,7 +46,6 @@ function Notice() {
     let result = $.httpRequest(url, options)
     $.DoubleLog(result.notice)
 }
-
 
 // Env for wps AirScript(JavaScript)
 // @time 2023-7-16
