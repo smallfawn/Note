@@ -63,7 +63,6 @@ function Env(name) {
         const endTime = Date.now();
         const costTime = (endTime - this.startTime) / 1000;
         this.DoubleLog(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
-        this.DoubleLog();
     }
     return env;
 }
