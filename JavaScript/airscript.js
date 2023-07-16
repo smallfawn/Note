@@ -8,12 +8,16 @@ function main() {
     $.start()
     let VariableList = $.checkEnv()
     for (let i of VariableList) {
-        Notice(i)
+        task(i)
     }
+    Notice()
     $.sendNotify()
     $.done()
 }
 
+function task() {
+    //执行代码
+}
 
 function Notice() {
     let url = "https://fastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json"
