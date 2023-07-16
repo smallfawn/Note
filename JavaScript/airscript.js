@@ -101,21 +101,19 @@ function Env(name) {
             content: this.msg,
             topic: "",
         };
-        if (body.token == "" || body.token == undefined || body.token == null) {
+        if (!body.token) {
             return console.log("PushPlus token为空")
-        } else {
-            let url = "https://www.pushplus.plus/send"
-            let options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(body),
-            }
-            let result = this.httpRequest(url, options)
-            console.log(result);
         }
-
+        let url = "https://www.pushplus.plus/send"
+        let options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body),
+        }
+        let result = this.httpRequest(url, options)
+        console.log(result);
     }
     env.timestamp = function () {
         return Date.now();
@@ -142,7 +140,7 @@ function Env(name) {
         return Crypto.createHmac("sha256", key).update(data).digest('hex')
     }
     env.wait = function (time) {
-        return Time.sleep(time) // 休眠一秒
+        return Time.sleep(time)
     }
     env.done = function () {
         const endTime = Date.now();
