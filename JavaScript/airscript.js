@@ -4,9 +4,11 @@ let VariableList
 function task(i) {
     let index = VariableList.indexOf(i);
     $.DoubleLog(`------ 开始第${index + 1}个账号 ------`)
-    let arr = i.split("&");
-    console.log(`账号一的参数${arr[0]}`);
-    console.log(`账号一的参数${arr[1]}`);
+    if (i.indexOf("&") !== -1) {
+        let arr = i.split("&");
+        console.log(`账号一的参数${arr[0]}`);
+        console.log(`账号一的参数${arr[1]}`);
+    }
     //初始化变量
     let token = ""
     //执行代码
@@ -30,8 +32,12 @@ function main() {
     $.start()
     Notice()
     VariableList = $.checkEnv()
-    for (let i of VariableList) {
-        task(i)
+    if (Array.isArray(VariableList)) {
+        for (let i of VariableList) {
+            task(i)
+        }
+    } else {
+        task(VariableList)
     }
     $.sendNotify()
     $.done()
