@@ -1,4 +1,4 @@
-function Promise(executor) {
+function Promise_min(executor) {
   if (typeof executor !== 'function') {
     throw new TypeError('Executor must be a function');
   }
@@ -36,7 +36,7 @@ function Promise(executor) {
   }
 }
 
-Promise.prototype.then = function (onResolved, onRejected) {
+Promise_min.prototype.then = function (onResolved, onRejected) {
   var self = this;
   var newPromise;
 
@@ -44,7 +44,7 @@ Promise.prototype.then = function (onResolved, onRejected) {
   onRejected = typeof onRejected === 'function' ? onRejected : function (reason) { throw reason; };
 
   if (self.state === 'fulfilled') {
-    newPromise = new Promise(function (resolve, reject) {
+    newPromise = new Promise_min(function (resolve, reject) {
       setTimeout(function () {
         try {
           var x = onResolved(self.value);
@@ -56,7 +56,7 @@ Promise.prototype.then = function (onResolved, onRejected) {
     });
 
   } else if (self.state === 'rejected') {
-    newPromise = new Promise(function (resolve, reject) {
+    newPromise = new Promise_min(function (resolve, reject) {
       setTimeout(function () {
         try {
           var x = onRejected(self.value);
@@ -68,7 +68,7 @@ Promise.prototype.then = function (onResolved, onRejected) {
     });
 
   } else if (self.state === 'pending') {
-    newPromise = new Promise(function (resolve, reject) {
+    newPromise = new Promise_min(function (resolve, reject) {
       self.onResolvedCallbacks.push(function (value) {
         setTimeout(function () {
           try {
@@ -95,7 +95,9 @@ Promise.prototype.then = function (onResolved, onRejected) {
 
   return newPromise;
 };
-
+Promise_min.prototype.catch = function (onRejected) {
+  return this.then(null, onRejected);
+};
 function resolvePromise(promise, x, resolve, reject) {
   if (promise === x) {
     reject(new TypeError('Circular promise chain'));
@@ -121,20 +123,20 @@ function resolvePromise(promise, x, resolve, reject) {
   resolve(x);
 }
 
-Promise.resolve = function (value) {
-  return new Promise(function (resolve) {
+Promise_min.resolve = function (value) {
+  return new Promise_min(function (resolve) {
     resolve(value);
   });
 };
 
-Promise.reject = function (reason) {
-  return new Promise(function (resolve, reject) {
+Promise_min.reject = function (reason) {
+  return new Promise_min(function (resolve, reject) {
     reject(reason);
   });
 };
 
-Promise.all = function (promises) {
-  return new Promise(function (resolve, reject) {
+Promise_min.all = function (promises) {
+  return new Promise_min(function (resolve, reject) {
     var resolvedCount = 0;
     var results = [];
 
@@ -162,8 +164,8 @@ Promise.all = function (promises) {
   });
 };
 
-Promise.race = function (promises) {
-  return new Promise(function (resolve, reject) {
+Promise_min.race = function (promises) {
+  return new Promise_min(function (resolve, reject) {
     for (var i = 0; i < promises.length; i++) {
       promises[i].then(resolve, reject);
     }
@@ -171,22 +173,23 @@ Promise.race = function (promises) {
 };
 
 
-
-
-var promise = new Promise(function (resolve, reject) {
-  // 执行异步操作
-  setTimeout(function () {
-    var randomNumber = Math.random();
-    if (randomNumber < 0.5) {
-      resolve(randomNumber);
-    } else {
-      reject(new Error('Random number is greater than 0.5'));
-    }
-  }, 1000);
+const axios = require("axios")
+var promise = new Promise_min(function (resolve, reject) {
+  axios.get('https://fastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json')
+    .then(function (response) {
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    })
+    .catch(function (error) {
+      reject(error);
+    });
 });
 
 promise.then(function (value) {
   console.log('Promise fulfilled:', value);
-}, function (reason) {
+}).catch(function (reason) {
   console.log('Promise rejected:', reason);
 });
