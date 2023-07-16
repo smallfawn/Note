@@ -67,10 +67,17 @@ function Env(name) {
         this.DoubleLog(`🔔${this.name}, 开始! 🕛`)
     }
     env.checkEnv = function () {
-        var str = envVariable;
-        var arr = str.split("@");
-        console.log(arr);
-        return arr
+        if (envVariable == "" || envVariable == undefined || envVariable == null) {
+            return console.log("环境变量为空")
+        }
+        if (envVariable.indexOf("@") !== -1) {
+            var str = envVariable;
+            var arr = str.split("@");
+            console.log(arr);
+            return arr
+        } else {
+            return envVariable
+        }
     }
     env.httpRequest = function (url, options) {
         return HTTP.fetch(url, options).json();
@@ -82,16 +89,21 @@ function Env(name) {
             content: this.msg,
             topic: "",
         };
-        let url = "https://www.pushplus.plus/send"
-        let options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body),
+        if (body.token == "" || body.token == undefined || body.token == null) {
+            return console.log("PushPlus token为空")
+        } else {
+            let url = "https://www.pushplus.plus/send"
+            let options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body),
+            }
+            let result = this.httpRequest(url, options)
+            console.log(result);
         }
-        let result = this.httpRequest(url, options)
-        console.log(result);
+
     }
     env.timestamp = function () {
         return Date.now();
