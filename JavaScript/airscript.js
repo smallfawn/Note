@@ -1,10 +1,17 @@
 const $ = Env("测试")
+
+let envVariable = `变量1@变量2@变量3`
 main()
+
 function main() {
     $.wait(5000)
     $.start()
-    Notice()
+    let VariableList = $.checkEnv()
+    for (let i = 0; i < VariableList.length; i++) {
+        Notice()
+    }
     $.sendNotify()
+
     $.done()
 }
 
@@ -36,6 +43,12 @@ function Env(name) {
     env.start = function () {
         this.DoubleLog(`🔔${this.name}, 开始! 🕛`)
     }
+    env.checkEnv = function () {
+        var str = envVariable;
+        var arr = str.split("@");
+        console.log(arr);
+        return arr
+    }
     env.httpRequest = function (url, options) {
         return HTTP.fetch(url, options).json();
     }
@@ -57,7 +70,6 @@ function Env(name) {
         let result = this.httpRequest(url, options)
         console.log(result);
     }
-
     env.timestamp = function () {
         return Date.now();
     }
