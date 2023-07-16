@@ -7,11 +7,10 @@ function main() {
     $.wait(5000)
     $.start()
     let VariableList = $.checkEnv()
-    for (let i = 0; i < VariableList.length; i++) {
-        Notice()
+    for (let i of VariableList) {
+        Notice(i)
     }
     $.sendNotify()
-
     $.done()
 }
 
@@ -27,7 +26,10 @@ function Notice() {
 }
 
 
-
+// Env for wps AirScript(JavaScript)
+// @time 2023-7-16
+// @Author: smallfawn 
+// @Github: https://github.com/smallfawn 
 function Env(name) {
     const env = {};
     // 定义属性
