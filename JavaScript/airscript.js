@@ -1,14 +1,17 @@
 const $ = Env("测试")
-let userCookie = `变量1&变量1.1@变量2&变量2.2@变量3&变量3.3`
-let userList
+//输入你变量所在的表格位置
+let range = "A1"
 
+let userList
 function task(i) {
     let index = userList.indexOf(i);
     $.DoubleLog(`------ 开始第${index + 1}个账号 ------`)
     if (i.indexOf("&") !== -1) {
         let arr = i.split("&");
-        console.log(`账号一的参数${arr[0]}`);
-        console.log(`账号一的参数${arr[1]}`);
+        $.DoubleLog(`账号的参数${arr[0]}`)
+        $.DoubleLog(`账号的参数${arr[1]}`)
+    } else {
+        $.DoubleLog(`账号的参数${i}`)
     }
     //初始化变量
     let token = ""
@@ -44,20 +47,22 @@ function main() {
     $.start()
     Notice()
     userList = $.checkEnv()
-    if (Array.isArray(userList)) {
+    userList = Array.isArray(userList) ? userList.forEach(task) : task(userList)
+    /*if (Array.isArray(userList)) {
         for (let i of userList) {
             task(i)
         }
     } else {
         task(userList)
-    }
-    //userList = Array.isArray(userList) ? userList.forEach(task) : task(userList)
+    }*/
     $.sendNotify()
     $.done()
 }
 
+
 // Env for wps AirScript(JavaScript)
 // @time 2023-7-16
+// update: new getDate & setDate
 // @Author: smallfawn 
 // @Github: https://github.com/smallfawn 
 function Env(name) {
@@ -76,14 +81,16 @@ function Env(name) {
         this.DoubleLog(`🔔${this.name}, 开始! 🕛`)
     }
     env.checkEnv = function () {
+        let userCookie = $.getData(range) !== "" ? $.getData(range) : "";
         if (userCookie && userCookie.indexOf("@") !== -1) {
             return userCookie.split("@");
         } else if (userCookie) {
             return userCookie;
         } else {
             console.log("环境变量为空");
+            return [];
         }
-    }
+    };
     //比如A1 那么就输出A1表格的内容
     env.getData = function (Range) {
         return Application.Range(Range).Text
