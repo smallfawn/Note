@@ -66,7 +66,6 @@ function main() {
 // @Author: smallfawn 
 // @Github: https://github.com/smallfawn 
 function Env(name) {
-
     const env = {};
     // 定义属性
     env.property = "value";
@@ -130,6 +129,10 @@ function Env(name) {
     env.timestamp = function () {
         return Date.now();
     }
+    env.randomString = function (len, charset = 'abcdef0123456789') {
+        let str = ''; for (let i = 0; i < len; i++) { str += charset.charAt(Math.floor(Math.random() * charset.length)); }
+        return str;
+    }
     env.random = function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
@@ -157,9 +160,16 @@ function Env(name) {
     env.wait = function (time) {
         return Time.sleep(time)
     }
+    env.base64Encrypt = function (data) {
+        let base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="; let result = ""; let i = 0; while (i < data.length) { let char1 = data.charCodeAt(i++); let char2 = data.charCodeAt(i++); let char3 = data.charCodeAt(i++); let enc1 = char1 >> 2; let enc2 = ((char1 & 3) << 4) | (char2 >> 4); let enc3 = ((char2 & 15) << 2) | (char3 >> 6); let enc4 = char3 & 63; if (isNaN(char2)) { enc3 = enc4 = 64 } else if (isNaN(char3)) { enc4 = 64 } result += base64Chars.charAt(enc1) + base64Chars.charAt(enc2) + base64Chars.charAt(enc3) + base64Chars.charAt(enc4) }
+        return result
+    }
+    env.base64Decrypt = function (data) {
+        let base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="; let result = ""; let i = 0; while (i < data.length) { let enc1 = base64Chars.indexOf(data.charAt(i++)); let enc2 = base64Chars.indexOf(data.charAt(i++)); let enc3 = base64Chars.indexOf(data.charAt(i++)); let enc4 = base64Chars.indexOf(data.charAt(i++)); let char1 = (enc1 << 2) | (enc2 >> 4); let char2 = ((enc2 & 15) << 4) | (enc3 >> 2); let char3 = ((enc3 & 3) << 6) | enc4; result += String.fromCharCode(char1); if (enc3 != 64) { result += String.fromCharCode(char2) } if (enc4 != 64) { result += String.fromCharCode(char3) } }
+        return result
+    }
     env.done = function () {
-        const endTime = Date.now();
-        const costTime = (endTime - this.startTime) / 1000;
+        const costTime = (Date.now() - this.startTime) / 1000;
         this.DoubleLog(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
     }
     return env;
