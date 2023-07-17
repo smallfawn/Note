@@ -66,6 +66,7 @@ function main() {
 // @Author: smallfawn 
 // @Github: https://github.com/smallfawn 
 function Env(name) {
+
     const env = {};
     // 定义属性
     env.property = "value";
@@ -99,7 +100,11 @@ function Env(name) {
         return Application.Range(Range).Value = Value
     }
     env.httpRequest = function (url, options) {
-        return HTTP.fetch(url, options).json();
+        /*使用HTTP服务时，禁止使用IP地址发起请求，禁止使用端口发起请求。
+        使用HTTP服务时，收到内容的消息体最大为2M，超过2M会抛出错误。*/
+        let resp = HTTP.fetch(url, options).text();
+        try { resp = JSON.parse(resp) } catch (error) { }
+        return resp
     }
     env.sendNotify = function () {
         let body = {
@@ -128,23 +133,26 @@ function Env(name) {
     env.random = function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    env.MD5 = function (data) {
-        return Crypto.createHash("md5").update(data).digest("hex")
+    /**
+     * Hash加密 允许"md5", "sha1", "sha", "sha256", "sha512"
+     * @param {*} algorithm 加密方法
+     * @param {*} data 加密参数
+     * @param {*} returnType 返回类型 默认hex
+     * @returns 
+     */
+    env.HashEncrypt = function (algorithm, data, returnType = "hex") {
+        return Crypto.createHash(algorithm).update(data).digest(returnType)
     }
-    env.SHA1 = function (data) {
-        return Crypto.createHash("sha1").update(data).digest("hex")
-    }
-    env.SHA256 = function (data) {
-        return Crypto.createHash("sha256").update(data).digest("hex")
-    }
-    env.HAMCMD5 = function (data, key) {
-        return Crypto.createHmac("md5", key).update(data).digest('hex')
-    }
-    env.HAMCSHA1 = function (data, key) {
-        return Crypto.createHmac("sha256", key).update(data).digest('hex')
-    }
-    env.HAMCSHA256 = function (data, key) {
-        return Crypto.createHmac("sha256", key).update(data).digest('hex')
+    /**
+     * Hmac加密 允许"md5", "sha1", "sha", "sha256", "sha512"
+     * @param {*} algorithm 加密方法
+     * @param {*} data 加密参数
+     * @param {*} key 加密密钥
+     * @param {*} returnType 返回类型 默认hex
+     * @returns 
+     */
+    env.HmacEncrypt = function (algorithm, data, key, returnType = "hex") {
+        return Crypto.createHmac(algorithm, key).update(data).digest(returnType)
     }
     env.wait = function (time) {
         return Time.sleep(time)
