@@ -120,7 +120,7 @@ function httpRequest(options, method = null) {
  */
 function getVersion(scriptUrl, timeout = 3 * 1000) {
     return new Promise((resolve) => {
-        const options = { url: `https://fastly.jsdelivr.net/gh/${scriptUrl}` };
+        const options = { url: `https://originfastly.jsdelivr.net/gh/${scriptUrl}` };
         $.get(options, (err, resp, data) => {
             try {
                 const regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
@@ -139,7 +139,7 @@ function getVersion(scriptUrl, timeout = 3 * 1000) {
  */
 function getNotice(timeout = 3 * 1000) {
     return new Promise((resolve) => {
-        const options = { url: `https://fastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json` };
+        const options = { url: `https://originfastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json` };
         $.get(options, (err, resp, data) => {
             try {
                 try {
