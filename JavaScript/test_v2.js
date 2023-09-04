@@ -12,24 +12,7 @@ const ckName = "test";
 const Notify = 1; //0为关闭通知,1为打开通知,默认为1
 let envSplitor = ["@", "\n"]; //多账号分隔符
 let strSplitor = '&'; //多变量分隔符
-
 let scriptVersionNow = "0.0.1";
-
-
-async function start() {
-    await getVersion("smallfawn/Note@main/JavaScript/test_v2.js");
-    await getNotice();
-
-    console.log("\n================== 用户信息 ==================\n");
-    let taskall = [];
-    for (let user of $.userList) {
-        if (user.ckStatus) {
-            taskall.push(await user.user_info());
-            await $.wait(1000);
-        }
-    }
-    await Promise.all(taskall);
-}
 
 class UserInfo {
     constructor(str) {
@@ -61,6 +44,18 @@ class UserInfo {
             console.log(e);
         }
     }
+}
+
+async function start() {
+    await _getVersion("smallfawn/Note@main/JavaScript/test_v2.js");
+    await _getNotice();
+    let taskall = [];
+    for (let user of $.userList) {
+        if (user.ckStatus) {
+            taskall.push(await user.user_info());
+        }
+    }
+    await Promise.all(taskall);
 }
 
 !(async () => {
