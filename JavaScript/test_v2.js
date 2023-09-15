@@ -13,6 +13,8 @@ const Notify = 1; //0为关闭通知,1为打开通知,默认为1
 let envSplitor = ["@", "\n"]; //多账号分隔符
 let strSplitor = '&'; //多变量分隔符
 let scriptVersionNow = "0.0.1";
+let jsUrl = "https://originfastly.jsdelivr.net/gh/smallfawn/Note@main/JavaScript/test_v2.js"
+let noticeUrl = `https://originfastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json`
 
 class UserInfo {
     constructor(str) {
@@ -22,7 +24,9 @@ class UserInfo {
         this.hostname = "https://" + this.host;
         this.ckStatus = true;
     }
-
+    async main(){
+        await this.user_info()
+    }
     async user_info() {
         try {
             let options = {
@@ -47,12 +51,12 @@ class UserInfo {
 }
 
 async function start() {
-    await _getVersion("smallfawn/Note@main/JavaScript/test_v2.js");
-    await _getNotice();
+    await _getVersion(jsUrl);
+    await _getNotice(noticeUrl);
     let taskall = [];
     for (let user of $.userList) {
         if (user.ckStatus) {
-            taskall.push(await user.user_info());
+            taskall.push(await user.main());
         }
     }
     await Promise.all(taskall);
@@ -116,8 +120,8 @@ function httpRequest(options, timeout = 1 * 1000) {
 /**
  * 获取远程版本
  */
-async function _getVersion(scriptUrl) {
-    const options = { url: `https://originfastly.jsdelivr.net/gh/${scriptUrl}` };
+async function _getVersion(jsUrl) {
+    const options = { url: jsUrl };
     let httpResult = await httpRequest(options)
     const regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
     const match = httpResult.match(regex);
@@ -127,8 +131,8 @@ async function _getVersion(scriptUrl) {
 /**
  * 获取远程通知
  */
-async function _getNotice() {
-    const options = { url: `https://originfastly.jsdelivr.net/gh/smallfawn/Note@main/Notice.json` };
+async function _getNotice(noticeUrl) {
+    const options = { url: noticeUrl };
     let httpResult = await httpRequest(options)
     const notice = httpResult.notice.replace(/\\n/g, "\n");
     $.DoubleLog(notice);
