@@ -292,9 +292,10 @@ function Env(t, s) {
         i && this.logs.push(i);
     }
     log(...t) {
-      t.length > 0
+      (t.length > 0)
         ? (this.logs = [...this.logs, ...t])
-        : console.log(this.logs.join(this.logSeparator));
+        : ""
+        console.log(t.join(this.logSeparator));
     }
     logErr(t, s) {
       const e = !this.isSurge() && !this.isQuanX() && !this.isLoon();
