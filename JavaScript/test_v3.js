@@ -74,7 +74,6 @@ async function start() {
 async function checkEnv() {
   let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || "";
   if (userCookie) {
-    console.log(userCookie);
     let e = envSplitor[0];
     for (let o of envSplitor)
       if (userCookie.indexOf(o) > -1) {
