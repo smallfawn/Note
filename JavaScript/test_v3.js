@@ -8,7 +8,8 @@
  */
 
 const $ = new Env("V3测试模板");
-const ckName = "test";
+const notify = $.isNode() ? require('./sendNotify') : '';
+let ckName = "test";
 let envSplitor = ["@", "\n"]; //多账号分隔符
 let strSplitor = "&"; //多变量分隔符
 let userIdx = 0;
