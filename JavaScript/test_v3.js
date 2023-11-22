@@ -38,7 +38,8 @@ class UserInfo {
             result = JSON.parse(result);
             console.log(result);
             if (result.errcode == 0) {
-                console.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`);
+                //console.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`);
+                $.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`)
                 this.ckStatus = true;
             } else {
                 console.log(`❌账号[${this.index}]  用户查询: 失败`);
@@ -66,7 +67,7 @@ async function start() {
     if (userList.length > 0) {
         await start();
     }
-    await SendMsg(msg)
+    await SendMsg($.logs.join("\n"))
 })()
     .catch((e) => console.log(e))
     .finally(() => $.done());
