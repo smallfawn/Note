@@ -21,6 +21,7 @@ class UserInfo {
         this.host = "echo.apipost.cn";
         this.hostname = "https://" + this.host;
         this.ckStatus = true;
+        //定义在这里的headers会被get请求删掉content-type 而不会重置
     }
     async main() {
         await this.user_info();
