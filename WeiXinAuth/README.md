@@ -42,3 +42,16 @@ console.log(url);
 ```
 
 # 2.H5 应用（网页应用）
+
+1.这里以知乎为例 wx268fcfe924dcb171
+https://open.weixin.qq.com/connect/qrconnect?appid=wx268fcfe924dcb171&redirect_uri=https%3A%2F%2Fwww.zhihu.com%2Foauth%2Fcallback%2Fwechat%3Faction%3Dlogin%26from%3D&response_type=code&scope=snsapi_login#wechat
+
+```JavaScript
+redirect_uri为登录后重定向的url response_type表示返回的内容 scope域
+var fordevtool = "https://long.open.weixin.qq.com/connect/l/qrconnect?uuid=xxxxxxx"
+            // console.log('devtool use', fordevtool)  uuid内嵌在html网页里面
+```
+
+https://lp.open.weixin.qq.com/connect/l/qrconnect?uuid=aaaaaaaa&_=1701256440100 \_时间戳
+
+window.wx_errcode=408;window.wx_code=''; 无状态 成功会显示 code
