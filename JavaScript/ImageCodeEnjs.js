@@ -1,3 +1,10 @@
+/*某JS代码加密方式 
+引入
+<script type="text/javascript" src="./imageCode.js"></script>
+加密代码
+imageCode.encode(code,host);生图
+运行代码
+imageCode.execute(imageSrc);*/
 (function(g){
 	var a = {};
 	var o = {};
