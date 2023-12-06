@@ -166,82 +166,84 @@ function Env(t, s) {
                 }
             }
         }
-        get(t, s = () => { }) {
-            if (t.headers) {
-                delete t.headers["Content-Type"];
-                delete t.headers["Content-Length"];
-            }
-            if (this.isSurge() || this.isLoon()) {
-                $httpClient.get(t, (t, e, i) => {
-                    if (!t && e) {
-                        e.body = i;
-                        e.statusCode = e.status;
-                    }
-                    s(t, e, i);
-                });
-            } else if (this.isQuanX()) {
-                $task.fetch(t).then(
-                    (t) => {
-                        const { statusCode: e, statusCode: i, headers: o, body: h } = t;
-                        s(null, { status: e, statusCode: i, headers: o, body: h }, h);
-                    },
-                    (t) => s(t)
-                );
-            } else if (this.isNode()) {
-                this.initGotEnv(t);
-                this.got(t)
-                    .on("redirect", (t, s) => {
-                        try {
-                            const e = t.headers["set-cookie"]
-                                .map(this.cktough.Cookie.parse)
-                                .toString();
-                            this.ckjar.setCookieSync(e, null);
-                            s.cookieJar = this.ckjar;
-                        } catch (t) {
-                            this.logErr(t);
-                        }
-                    })
-                    .then(
-                        (t) => {
-                            const { statusCode: e, statusCode: i, headers: o, body: h } = t;
-                            s(null, { status: e, statusCode: i, headers: o, body: h }, h);
-                        },
-                        (t) => s(t)
-                    );
+        /**
+        * @param {Object} options
+        * @returns {String} 将 Object 对象 转换成 queryStr: key=val&name=senku
+        */
+        queryStr(options) {
+            return Object.entries(options)
+                .map(([key, value]) => `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`)
+                .join('&');
+        }
+        isJSONString(str) {
+            try {
+                var obj = JSON.parse(str);
+                if (typeof obj == 'object' && obj) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (e) {
+                return false;
             }
         }
-        post(t, s = () => { }) {
-            if (t.body && t.headers && !t.headers["Content-Type"]) {
-                t.headers["Content-Type"] = "application/x-www-form-urlencoded";
+        isJson(obj) {
+            var isjson = typeof (obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
+            return isjson;
+        }
+        async SendMsg(message) {
+            if (!message) return;
+            if ($.isNode()) {
+                await notify.sendNotify($.name, message)
+            } else {
+                $.msg($.name, '', message)
             }
-            delete t.headers["Content-Length"];
-            if (this.isSurge() || this.isLoon()) {
-                $httpClient.post(t, (t, e, i) => {
-                    if (!t && e) {
-                        e.body = i;
-                        e.statusCode = e.status;
+        }
+        async httpRequest(options) {
+            const t = {
+                ...options
+            };
+            if (!t.headers) {
+                t.headers = {}
+            }
+            if (t.params) {
+                t.url += '?' + this.queryStr(t.params);
+            }
+            t.method = t.method.toLowerCase()
+            if (t.method.toLowerCase() === 'get') {
+                delete t.headers['Content-Type'];
+                delete t.headers['Content-Length'];
+                delete t["body"]
+            }
+            if (t.method.toLowerCase() === 'post') {
+                let contentType
+
+                if (!t.body) {
+                    t.body = ""
+                } else {
+                    if (typeof t.body == "string") {
+                        if (this.isJSONString(t.body)) {
+                            contentType = 'application/json'
+                        } else {
+                            contentType = 'application/x-www-form-urlencoded'
+                        }
+                    } else if (this.isJson(t.body)) {
+                        t.body = JSON.stringify(t.body)
+                        contentType = 'application/json'
                     }
-                    s(t, e, i);
-                });
-            } else if (this.isQuanX()) {
-                t.method = "POST";
-                $task.fetch(t).then(
-                    (t) => {
-                        const { statusCode: e, statusCode: i, headers: o, body: h } = t;
-                        s(null, { status: e, statusCode: i, headers: o, body: h }, h);
-                    },
-                    (t) => s(t)
-                );
-            } else if (this.isNode()) {
+                }
+                if (!t.headers['Content-Type']) {
+                    t.headers['Content-Type'] = contentType;
+                }
+                delete t.headers['Content-Length'];
+            }
+            if (this.isNode()) {
                 this.initGotEnv(t);
-                const { url: e, ...i } = t;
-                this.got.post(e, i).then(
-                    (t) => {
-                        const { statusCode: e, statusCode: i, headers: o, body: h } = t;
-                        s(null, { status: e, statusCode: i, headers: o, body: h }, h);
-                    },
-                    (t) => s(t)
-                );
+                let httpResult = await this.got(t)
+                if (this.isJSONString(httpResult.body)) {
+                    httpResult.body = JSON.parse(httpResult.body)
+                }
+                return httpResult;
             }
         }
         randomNumber(length) {
@@ -308,14 +310,6 @@ function Env(t, s) {
                 (this.isSurge() || this.isLoon()
                     ? $notification.post(s, e, i, h(o))
                     : this.isQuanX() && $notify(s, e, i, h(o)));
-            /*this.logs.push(
-                "",
-                "==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============="
-            ),
-            this.logs.push(s),
-            e && this.logs.push(e),
-            i && this.logs.push(i);*/
-            //以上代码等同于下面的
             let logs = ['', '==============📣系统通知📣=============='];
             logs.push(t);
             e ? logs.push(e) : '';
@@ -348,5 +342,3 @@ function Env(t, s) {
         }
     })(t, s);
 }
-
-
