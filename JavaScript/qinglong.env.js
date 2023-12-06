@@ -191,7 +191,7 @@ function Env(t, s) {
             var isjson = typeof (obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
             return isjson;
         }
-        async SendMsg(message) {
+        async sendMsg(message) {
             if (!message) return;
             if ($.isNode()) {
                 await notify.sendNotify($.name, message)
@@ -210,12 +210,12 @@ function Env(t, s) {
                 t.url += '?' + this.queryStr(t.params);
             }
             t.method = t.method.toLowerCase()
-            if (t.method.toLowerCase() === 'get') {
+            if (t.method === 'get') {
                 delete t.headers['Content-Type'];
                 delete t.headers['Content-Length'];
                 delete t["body"]
             }
-            if (t.method.toLowerCase() === 'post') {
+            if (t.method === 'post') {
                 let contentType
 
                 if (!t.body) {
