@@ -189,14 +189,14 @@ function Env(t, s) {
             if (t.params) {
                 t.url += '?' + this.queryStr(t.params);
             }
-            t.method = t.method.toLowerCase()
+            t.method = t.method.toLowerCase();
             if (t.method === 'get') {
                 delete t.headers['Content-Type'];
                 delete t.headers['Content-Length'];
                 delete t["body"]
             }
             if (t.method === 'post') {
-                let contentType
+                let contentType;
 
                 if (!t.body) {
                     t.body = ""
@@ -208,8 +208,8 @@ function Env(t, s) {
                             contentType = 'application/x-www-form-urlencoded'
                         }
                     } else if (this.isJson(t.body)) {
-                        t.body = JSON.stringify(t.body)
-                        contentType = 'application/json'
+                        t.body = JSON.stringify(t.body);
+                        contentType = 'application/json';
                     }
                 }
                 if (!t.headers['Content-Type']) {
@@ -219,7 +219,7 @@ function Env(t, s) {
             }
             if (this.isNode()) {
                 this.initGotEnv(t);
-                let httpResult = await this.got(t)
+                let httpResult = await this.got(t);
                 if (this.isJSONString(httpResult.body)) {
                     httpResult.body = JSON.parse(httpResult.body)
                 }
