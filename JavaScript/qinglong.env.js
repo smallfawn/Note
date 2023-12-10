@@ -25,26 +25,6 @@ function Env(t, s) {
         isLoon() {
             return "undefined" != typeof $loon;
         }
-        getScript(t) {
-            return new Promise((s) => {
-                this.get({ url: t }, (t, e, i) => s(i));
-            });
-        }
-        runScript(t, s) {
-            return new Promise((e) => {
-                let i = this.getdata("@chavy_boxjs_userCfgs.httpapi");
-                i = i ? i.replace(/\n/g, "").trim() : i;
-                let o = this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout");
-                (o = o ? 1 * o : 20), (o = s && s.timeout ? s.timeout : o);
-                const [h, a] = i.split("@"),
-                    r = {
-                        url: `http://${a}/v1/scripting/evaluate`,
-                        body: { script_text: t, mock_type: "cron", timeout: o },
-                        headers: { "X-Key": h, Accept: "*/*" },
-                    };
-                this.post(r, (t, s, i) => e(i));
-            }).catch((t) => this.logErr(t));
-        }
         loaddata() {
             if (!this.isNode()) return {};
             {
