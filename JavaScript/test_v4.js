@@ -9,12 +9,12 @@
 const $ = new Env("V4测试模板");
 const notify = $.isNode() ? require('./sendNotify') : '';
 let ckName = "test";
-let envSplitor = ["@", "\n"]; //多账号分隔符
-let strSplitor = "&"; //多变量分隔符
+let envSplitor = ["&", "\n"]; //多账号分隔符
+let strSplitor = "#"; //多变量分隔符
 let userIdx = 0;
 let userList = [];
 let msg = ""
-class UserInfo {
+class Task {
     constructor(str) {
         this.index = ++userIdx;
         this.ck = str.split(strSplitor)[0]; //单账号多变量分隔符
@@ -86,7 +86,7 @@ async function checkEnv() {
                 e = o;
                 break;
             }
-        for (let n of userCookie.split(e)) n && userList.push(new UserInfo(n));
+        for (let n of userCookie.split(e)) n && userList.push(new Task(n));
     } else {
         console.log("未找到CK");
         return;
