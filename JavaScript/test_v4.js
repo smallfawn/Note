@@ -26,15 +26,14 @@ class Task {
     async main() {
         await this.user_info();
     }
+    async taskRequest(method, url, body = "") {
+        //
+        let { body: result } = await $.httpRequest({ method: method, url: url })
+        return result
+    }
     async user_info() {
         try {
-            let options = {
-                fn: "演示",
-                method: "get",
-                url: `${this.hostname}/get.php`,
-                headers: {},
-            }
-            let { body: result } = await $.httpRequest(options);
+            let result = await this.taskRequest("get", `${this.hostname}/get.php`)
             //console.log(options);
             console.log(result);
             if (result.errcode == 0) {
