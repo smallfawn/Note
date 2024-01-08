@@ -247,6 +247,19 @@ function Env(t, s) {
                 .map(([key, value]) => `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`)
                 .join('&');
         }
+        //从url获取参数组成json
+        getURLParams(url) {
+            const params = {};
+            const queryString = url.split('?')[1];
+            if (queryString) {
+                const paramPairs = queryString.split('&');
+                paramPairs.forEach(pair => {
+                    const [key, value] = pair.split('=');
+                    params[key] = decodeURIComponent(value);
+                });
+            }
+            return params;
+        }
         isJSONString(str) {
             try {
                 var obj = JSON.parse(str);
