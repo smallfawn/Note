@@ -28,7 +28,7 @@ class Task {
     }
     async taskRequest(method, url, body = "") {
         //
-        let { body: result } = await $.httpRequest({ method: method, url: url })
+        let { body: result } = await $.httpRequest({ method: method, headers:{}, url: url })
         return result
     }
     async user_info() {
