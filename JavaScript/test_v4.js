@@ -28,7 +28,7 @@ class Task {
     }
     async taskRequest(method, url, body = "") {
         //
-        let { body: result } = await $.httpRequest({ method: method, headers:{}, url: url })
+        let { body: result } = await $.httpRequest({ method: method, headers: {}, url: url })
         return result
     }
     async user_info() {
@@ -297,27 +297,28 @@ function Env(t, s) {
             if (t.method === 'get') {
                 delete t.headers['Content-Type'];
                 delete t.headers['Content-Length'];
+                delete t.headers['content-type'];
+                delete t.headers['content-length'];
                 delete t["body"]
             }
             if (t.method === 'post') {
-                let contentType;
-
+                let ContentType;
                 if (!t.body) {
                     t.body = ""
                 } else {
                     if (typeof t.body == "string") {
                         if (this.isJSONString(t.body)) {
-                            contentType = 'application/json'
+                            ContentType = 'application/json'
                         } else {
-                            contentType = 'application/x-www-form-urlencoded'
+                            ContentType = 'application/x-www-form-urlencoded'
                         }
                     } else if (this.isJson(t.body)) {
                         t.body = JSON.stringify(t.body);
-                        contentType = 'application/json';
+                        ContentType = 'application/json';
                     }
                 }
                 if (!t.headers['Content-Type']) {
-                    t.headers['Content-Type'] = contentType;
+                    t.headers['Content-Type'] = ContentType;
                 }
                 delete t.headers['Content-Length'];
             }
