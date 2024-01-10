@@ -28,7 +28,20 @@ class Task {
     }
     async taskRequest(method, url, body = "") {
         //
-        let { body: result } = await $.httpRequest({ method: method, headers: {}, url: url })
+        let headers = {}
+        const reqeuestOptions = {
+            url: url,
+            method: method,
+            headers: headers
+        }
+        if (method !== "get") {
+            if (headers["Content-Type"] == "application/json") {
+                reqeuestOptions["body"] = JSON.stringify(body);
+            } else {
+                reqeuestOptions["body"] = body
+            }
+        }
+        let { body: result } = await $.httpRequest(reqeuestOptions)
         return result
     }
     async user_info() {
