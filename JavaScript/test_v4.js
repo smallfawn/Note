@@ -100,7 +100,7 @@ async function checkEnv() {
             }
         for (let n of userCookie.split(e)) n && userList.push(new Task(n));
     } else {
-        console.log("未找到CK");
+        console.log(`未找到CK【${ckName}】`);
         return;
     }
     return console.log(`共找到${userList.length}个账号`), true; //true == !0
