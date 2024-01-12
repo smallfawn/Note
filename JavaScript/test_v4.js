@@ -330,7 +330,7 @@ function Env(t, s) {
                         ContentType = 'application/json';
                     }
                 }
-                if (!t.headers['Content-Type']) {
+                if (!t.headers['Content-Type']||!t.headers['content-type']) {
                     t.headers['Content-Type'] = ContentType;
                 }
                 delete t.headers['Content-Length'];
