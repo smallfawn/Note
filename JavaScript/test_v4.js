@@ -68,7 +68,7 @@ async function start() {
     let taskall = [];
     for (let user of userList) {
         if (user.ckStatus) {
-            taskall.push(await user.main());
+            taskall.push(user.main());
         }
     }
     await Promise.all(taskall);
@@ -267,7 +267,7 @@ function Env(t, s) {
                 const paramPairs = queryString.split('&');
                 paramPairs.forEach(pair => {
                     const [key, value] = pair.split('=');
-                    params[key] = decodeURIComponent(value);
+                    params[key] = value;
                 });
             }
             return params;
