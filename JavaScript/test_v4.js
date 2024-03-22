@@ -34,13 +34,7 @@ class Task {
             method: method,
             headers: headers
         }
-        if (method !== "get") {
-            if (headers["Content-Type"] == "application/json") {
-                reqeuestOptions["body"] = JSON.stringify(body);
-            } else {
-                reqeuestOptions["body"] = body
-            }
-        }
+        body == "" ? "" : Object.assign(reqeuestOptions, { body: body })
         let { body: result } = await $.httpRequest(reqeuestOptions)
         return result
     }
@@ -64,20 +58,18 @@ class Task {
     }
 }
 
-async function start() {
-    let taskall = [];
-    for (let user of userList) {
-        if (user.ckStatus) {
-            taskall.push(user.main());
-        }
-    }
-    await Promise.all(taskall);
-}
+
 
 !(async () => {
     if (!(await checkEnv())) return;
     if (userList.length > 0) {
-        await start();
+        let taskall = [];
+        for (let user of userList) {
+            if (user.ckStatus) {
+                taskall.push(user.main());
+            }
+        }
+        await Promise.all(taskall);
     }
     await $.sendMsg($.logs.join("\n"))
 })()
@@ -330,7 +322,7 @@ function Env(t, s) {
                         ContentType = 'application/json';
                     }
                 }
-                if (!t.headers['Content-Type']||!t.headers['content-type']) {
+                if (!t.headers['Content-Type'] || !t.headers['content-type']) {
                     t.headers['Content-Type'] = ContentType;
                 }
                 delete t.headers['Content-Length'];
