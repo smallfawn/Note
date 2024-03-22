@@ -48,7 +48,7 @@ class Task {
                 $.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`)
                 this.ckStatus = true;
             } else {
-                console.log(`❌账号[${this.index}]  用户查询: 失败`);
+                $.log(`❌账号[${this.index}]  用户查询: 失败`);
                 this.ckStatus = false;
                 console.log(result);
             }
