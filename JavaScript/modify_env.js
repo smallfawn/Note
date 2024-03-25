@@ -60,27 +60,27 @@ function Env(t, s) {
         });
       });
     }
-    getval(t) {
+    async getval(t) {
       if (this.isSurge() || this.isLoon()) {
         return $persistentStore.read(t);
       } else if (this.isQuanX()) {
         return $prefs.valueForKey(t);
       } else if (this.isNode()) {
-        this.data = this.loaddata();
-        return this.data[t];
+        this.data = await this.loaddata();
+        return await this.data[t];
       } else {
         return (this.data && this.data[t]) || null;
       }
     }
-    setval(t, s) {
+    async setval(t, s) {
       if (this.isSurge() || this.isLoon()) {
         return $persistentStore.write(t, s);
       } else if (this.isQuanX()) {
         return $prefs.setValueForKey(t, s);
       } else if (this.isNode()) {
-        this.data = this.loaddata();
+        this.data = await this.loaddata();
         this.data[s] = t;
-        this.writedata();
+        await this.writedata();
         return true;
       } else {
         return (this.data && this.data[s]) || null;
