@@ -24,35 +24,32 @@ function Env(t, s) {
         }
         loaddata() {
             if (!this.isNode()) return {};
-            this.fs = this.fs ? this.fs : require("fs")
+            this.fs = this.fs ? this.fs : require("fs");
             this.path = this.path ? this.path : require("path");
-            // 获取数据文件的绝对路径
             const t = this.path.resolve(this.dataFile),
                 s = this.path.resolve(process.cwd(), this.dataFile),
                 e = this.fs.existsSync(t),
-                i = !e && this.fs.existsSync(s)
-            // 如果数据文件不存在，则返回空对象
+                i = !e && this.fs.existsSync(s);
             if (!e && !i) return {};
-            const pt = e ? t : s; // 使用存在的文件路径
+            const pt = e ? t : s;
             return new Promise((resolve, reject) => {
                 this.fs.readFile(pt, "utf8", (r, o) => {
                     if (r) reject({});
-                    else o = this.isJSONString(o) ? JSON.parse(o) : o; resolve(o);
+                    else o = this.isJSONString(o) ? JSON.parse(o) : o;
+                    resolve(o);
                 });
             });
         }
         writedata() {
-            if (!this.isNode()) return; // 如果不在Node环境中，则返回空对象
-            this.fs = this.fs ? this.fs : require("fs"); // 如果fs未定义，则加载fs模块
-            this.path = this.path ? this.path : require("path"); // 如果path未定义，则加载path模块
-            // 获取数据文件的绝对路径
-            const t = this.path.resolve(this.dataFile), // 获取数据文件的绝对路径
-                s = this.path.resolve(process.cwd(), this.dataFile), // 获取备用数据文件的绝对路径
-                e = this.fs.existsSync(t), // 检查数据文件是否存在
-                i = !e && this.fs.existsSync(s); // 检查备用数据文件是否存在
-            //if (!e && !i) return;
-            const o = JSON.stringify(this.data, null, 2); // 将数据转换为JSON字符串
-            const pt = e ? t : (i ? s : t);
+            if (!this.isNode()) return;
+            this.fs = this.fs ? this.fs : require("fs");
+            this.path = this.path ? this.path : require("path");
+            const t = this.path.resolve(this.dataFile),
+                s = this.path.resolve(process.cwd(), this.dataFile),
+                e = this.fs.existsSync(t),
+                i = !e && this.fs.existsSync(s);
+            const o = JSON.stringify(this.data, null, 2);
+            const pt = e ? t : i ? s : t;
             return new Promise((resolve, reject) => {
                 this.fs.writeFile(pt, o, (r) => {
                     if (r) reject(r);
@@ -116,7 +113,6 @@ function Env(t, s) {
                 )
                 .join("&");
         }
-
         getURLParams(url) {
             const params = {};
             const queryString = url.split("?")[1];
