@@ -21,7 +21,6 @@ class Task {
         this.host = "echo.apipost.cn";
         this.hostname = "https://" + this.host;
         this.ckStatus = true;
-        //定义在这里的headers会被get请求删掉content-type 而不会重置
     }
     async main() {
         await this.user_info();
@@ -41,16 +40,14 @@ class Task {
     async user_info() {
         try {
             let result = await this.taskRequest("get", `${this.hostname}/get.php`)
-            //console.log(options);
             console.log(result);
             if (result.errcode == 0) {
-                //console.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`);
                 $.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`)
                 this.ckStatus = true;
             } else {
                 $.log(`❌账号[${this.index}]  用户查询: 失败`);
                 this.ckStatus = false;
-                console.log(result);
+                //console.log(result);
             }
         } catch (e) {
             console.log(e);
