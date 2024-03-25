@@ -50,8 +50,7 @@ function Env(t, s) {
         s = this.path.resolve(process.cwd(), this.dataFile), // 获取备用数据文件的绝对路径
         e = this.fs.existsSync(t), // 检查数据文件是否存在
         i = !e && this.fs.existsSync(s); // 检查备用数据文件是否存在
-      // 如果数据文件不存在，则返回空对象
-      if (!e && !i) return;
+      //if (!e && !i) return;
       const o = JSON.stringify(this.data); // 将数据转换为JSON字符串
       const pt = e ? t : (i ? s : t);
       return new Promise((resolve, reject) => {
