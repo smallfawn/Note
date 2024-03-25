@@ -33,9 +33,9 @@ function Env(t, s) {
       const i = !e && this.fs.existsSync(s);
       // 如果数据文件不存在，则返回空对象
       if (!e && !i) return {};
-      const c = e ? t : s; // 使用存在的文件路径
+      const pt = e ? t : s; // 使用存在的文件路径
       return new Promise((resolve, reject) => {
-        this.fs.readFile(c, "utf8", (r, o) => {
+        this.fs.readFile(pt, "utf8", (r, o) => {
           if (r) reject({});
           else o = this.isJSONString(o) ? JSON.parse(o) : o; resolve(o);
         });
