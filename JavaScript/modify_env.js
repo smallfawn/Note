@@ -27,10 +27,10 @@ function Env(t, s) {
             this.fs = this.fs ? this.fs : require("fs")
             this.path = this.path ? this.path : require("path");
             // 获取数据文件的绝对路径
-            const t = this.path.resolve(this.dataFile);
-            const s = this.path.resolve(process.cwd(), this.dataFile);
-            const e = this.fs.existsSync(t);
-            const i = !e && this.fs.existsSync(s);
+            const t = this.path.resolve(this.dataFile),
+                s = this.path.resolve(process.cwd(), this.dataFile),
+                e = this.fs.existsSync(t),
+                i = !e && this.fs.existsSync(s)
             // 如果数据文件不存在，则返回空对象
             if (!e && !i) return {};
             const pt = e ? t : s; // 使用存在的文件路径
