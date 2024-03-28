@@ -6,6 +6,8 @@ on:
     types: started
   repository_dispatch:
     types: manual_sync2gitee
+  push:
+    branches: [ main ]  # 或者替换为需要监听的分支名称，如 '*' 表示监听所有分支
 jobs:
   repo-sync:
     env:
