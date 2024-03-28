@@ -3,6 +3,7 @@
  * @param {String} e o.token + "&" + a + "&" + s + "&" + n.data  _m_h5_tk & 时间戳 & appkey & 请求表单
  * @returns 
  */
+
 function ali_H5_sign(e) {
     function t(e, t) {
         return e << t | e >>> 32 - t
