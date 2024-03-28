@@ -1,8 +1,6 @@
 on:
   push:
-    branches: [master]
-  pull_request_target:
-    branches: [master]
+    branches: [main]
 name: Tests / test-user-mirror
 jobs:
   build:
