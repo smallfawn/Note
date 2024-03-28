@@ -7,4 +7,4 @@ ADD *.sh /
 ADD mirror/hub-mirror /hub-mirror
 ADD action.yml /
 
-ENTRYPOINT ["mirror/entrypoint.sh"]
+ENTRYPOINT ["/mirror/entrypoint.sh"]
