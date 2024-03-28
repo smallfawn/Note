@@ -17,7 +17,7 @@ class HubMirror(object):
         self.mappings = str2map(self.args.mappings)
 
     def _create_parser(self):
-        with open('/action.yml', 'r') as f:
+        with open('/mirror/action.yml', 'r') as f:
             action = yaml.safe_load(f)
         parser = argparse.ArgumentParser(
             description=action['description'])
