@@ -1,16 +1,10 @@
 on:
-<<<<<<< HEAD
   push:
   pull_request_target:
     branches: [master]
-=======
->>>>>>> 274eb3f4208f68c193d8e8856fb2f4f44edfbd80
-  push:
-  pull_request_target:
-    branches: [master]
+  
 name: Tests / test-user-mirror
 jobs:
-<<<<<<< HEAD
   runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,22 +26,4 @@ jobs:
           # static_list: 'repo_name,repo_name2'
           # black_list: 'repo_name,repo_name2'
           # white_list: 'repo_name,repo_name2'
-=======
-  run:
-    name: Run
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v1
-    - name: Mirror Github to Gitee with white list
-      uses: ./.
-      with:
-        src: github/smallfawn
-        dst: gitee/smallfawn
-        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-        dst_token:  ${{ secrets.GITEE_TOKEN }}
-        static_list: 'Note'
-        force_update: true
-        debug: true
-        mappings: 'hashes=>hashes_gitee'
->>>>>>> 274eb3f4208f68c193d8e8856fb2f4f44edfbd80
+
