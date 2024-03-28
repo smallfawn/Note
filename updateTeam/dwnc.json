@@ -21,5 +21,11 @@
             "shareUserId": 1630362958,
             "status": false
         }
+    ],
+    "zeroLotteryShareCodes": [
+        {
+            "shareKey":"9Aj6eFzFfl1EetN4yRJONjCUYRZ1nUouZp7tOSk2paM=",
+            "status":false
+        }
     ]
 }
