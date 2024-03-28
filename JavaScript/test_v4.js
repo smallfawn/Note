@@ -5,7 +5,7 @@
  * 变量值:
  * scriptVersionNow = "0.0.1";
  */
-//1
+//1 2
 const $ = new Env("V4测试模板");
 const notify = $.isNode() ? require('./sendNotify') : '';
 let ckName = "test";
