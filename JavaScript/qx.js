@@ -6,6 +6,7 @@ let strSplitor = "&"; //多变量分隔符
 let userIdx = 0;
 let userList = [];
 let msg = ""
+//适配QX
 class UserInfo {
     constructor(str) {
         this.index = ++userIdx;
