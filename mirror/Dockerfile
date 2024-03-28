@@ -5,6 +5,6 @@ RUN apt update && apt install git git-lfs python3 python3-pip -y && \
 
 ADD *.sh /
 ADD hub-mirror /hub-mirror
-ADD action.yml /
+ADD ./action.yml /
 
 ENTRYPOINT ["/entrypoint.sh"]
