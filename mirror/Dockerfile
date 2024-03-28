@@ -12,6 +12,6 @@ COPY mirror/*.sh /
 # 复制根目录中的 action.yml 文件到镜像中
 COPY action.yml /
 # 复制根目录中的 hub-mirror 文件夹到镜像中的根目录下的 hub-mirror 文件夹中
-COPY mirror/hub-mirror /hub-mirror
+COPY /mirror/hub-mirror /hub-mirror
 # 设置容器启动时的入口点
 ENTRYPOINT ["/mirror/entrypoint.sh"]
