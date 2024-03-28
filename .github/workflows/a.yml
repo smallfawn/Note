@@ -1,14 +1,12 @@
 on:
   push:
     branches: [main]
-name: Tests / test-user-mirror
+name: gitee - update
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Mirror repository
         uses: Yikun/hub-mirror-action@master
         with:
           src: 'github/${{ github.repository_owner }}'
