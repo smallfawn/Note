@@ -1,28 +1,16 @@
 # 通过 Github action， 在仓库的每一次 commit 后自动同步到 Gitee 上
 name: sync2gitee
 on:
-  workflow_dispatch:
-  watch:
-    types: started
-  repository_dispatch:
-    types: manual_sync2gitee
+  push:
+  pull_request_target:
+    branches: [master]
   push:
     branches: [ main ]  # 或者替换为需要监听的分支名称，如 '*' 表示监听所有分支
 jobs:
-  repo-sync:
-    env:
-      dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-      dst_token: ${{ secrets.GITEE_TOKEN }}
-      gitee_user: smallfawn
-    runs-on: ubuntu-latest
+  runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-
-      - name: sync github -> gitee
         uses: Yikun/hub-mirror-action@master
-        if: env.dst_key && env.dst_token && env.gitee_user
         with:
           # 必选，需要同步的 Github 用户（源）
           src: 'github/${{ github.repository_owner }}'
