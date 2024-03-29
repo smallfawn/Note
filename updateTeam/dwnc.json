@@ -26,10 +26,10 @@
     "zeroLotteryShareCodes": [
         {
             "shareKey": "6njTZ+JuthkTufj6rn17Tzj9+swKvSYhH5zH7ypghtoeggW/RrK6lbsQTVeg0MOh",
-            "status": false
+            "status": true
         },
         {
-            "shareKey": "6njTZ+JuthkTufj6rn17T4tWGl2rh4D74iACKsIn0MceggW/RrK6lbsQTVeg0MOh",
+            "shareKey": "6njTZ+JuthkTufj6rn17T7sFz/QgTQ2zwpS63U7EYWgeggW/RrK6lbsQTVeg0MOh",
             "status": false
         }
     ]
