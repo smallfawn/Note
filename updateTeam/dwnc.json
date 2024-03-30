@@ -1,6 +1,16 @@
 {
     "notice": "通知群1021185005",
     "keyword": "🌴🙀🌸💣👩🌱🌹",
+    "treeShareCodesList": [
+        "🌴🙀🌸💣👩🌱🌹"
+    ],
+    "stationShareCodesList": [
+        "KZjOlyg"
+    ],
+    "zeroLotteryShareCodesModeGetList": [
+        "XmZAqa5",
+        "qewa4dL"
+    ],
     "keywords": [
         {
             "keyword": "🌴🙀🌸💣👩🌱🌹",
@@ -9,17 +19,6 @@
         {
             "keyword": "💫👵👵👶👴🌷👴",
             "status": false
-        }
-    ],
-    "treeShareCodesList":["🌴🙀🌸💣👩🌱🌹"],
-    "stationShareCodesList": [
-        {
-            "id": 2520,
-            "shareUserId": 1630362958
-        },
-        {
-            "id": 2519,
-            "shareUserId": 1630362958
         }
     ],
     "stationShareCodes": [
@@ -33,9 +32,6 @@
             "shareUserId": 1630362958,
             "status": false
         }
-    ],
-    "zeroLotteryShareCodesModeGetList": [
-        "XmZAqa5","qewa4dL"
     ],
     "zeroLotteryShareCodesModeGet": [
         {
