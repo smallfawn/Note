@@ -11,6 +11,16 @@
             "status": false
         }
     ],
+    "stationShareCodesList": [
+        {
+            "id": 2520,
+            "shareUserId": 1630362958
+        },
+        {
+            "id": 2519,
+            "shareUserId": 1630362958
+        }
+    ],
     "stationShareCodes": [
         {
             "id": 2520,
@@ -23,7 +33,9 @@
             "status": false
         }
     ],
-    "zeroLotteryShareCodesModeGetList":["XmZAqa5"],
+    "zeroLotteryShareCodesModeGetList": [
+        "XmZAqa5"
+    ],
     "zeroLotteryShareCodesModeGet": [
         {
             "shareKey": "XmZAqa5",
