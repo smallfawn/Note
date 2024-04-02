@@ -1,81 +1,88 @@
 {
-    "v": "0.1.3bate_6",
-    "notice": "通知群1021185005",
-    "keyword": "👧💯👱👽👵💦🌸",
-    "treeShareCodesList": [
-        "👱🙉🌾👴🙈👧👱",
-        "🌺👻🙈😿👦👦💬",
-        "💨👾🙈😻😻😿🌾",
-        "🌻🌻😺👧👦😻🙀",
-        "🍀💣🌾💫👩👵👾",
-        "👧💮😺🌾😺💣",
-        "🌵👴👻😸😼💫👽",
-        "👩🙊😹💦😹👴💮",
-        "😺💫🙉👦💥🙉🙀"
-    ],
-    "stationShareCodesList": [
-        "GazmR5l",
-        "6BvK1q9",
-        "e95YMlr",
-        "BogvLjA",
-        "2eRbxy1",
-        "r1y8bA",
-        "A6V0DJx",
-        "2DNZgrg"
-    ],
-    "zeroLotteryShareCodesModeGetList": [
-        "GXwWrQ1",
-        "o4qjWQd",
-        "xvgRWNZ",
-        "Lvb2Ya",
-        "4ZrELDO",
-        "8LQpG8",
-        "zVqm92v",
-        "M59VLK2",
-        "ZoDpXVa",
-        "ZjzV05v",
-        "23gMd4d"
-    ],
-    "keywords": [
-        {
-            "keyword": "🌴🙀🌸💣👩🌱🌹",
-            "status": false
-        },
-        {
-            "keyword": "💫👵👵👶👴🌷👴",
-            "status": false
-        }
-    ],
-    "stationShareCodes": [
-        {
-            "id": 2520,
-            "shareUserId": 1630362958,
-            "status": true
-        },
-        {
-            "id": 2514,
-            "shareUserId": 1630362958,
-            "status": false
-        }
-    ],
-    "zeroLotteryShareCodesModeGet": [
-        {
-            "shareKey": "XmZAqa5",
-            "status": false
-        }
-    ],
-    "zeroLotteryShareCodes": [
-        {
-            "shareKey": "6njTZ+JuthkTufj6rn17T4bqAfsp/rYTeoUqJKrWpMAeggW/RrK6lbsQTVeg0MOh",
-            "status": false
-        },
-        {
-            "shareKey": "6njTZ+JuthkTufj6rn17T7sFz/QgTQ2zwpS63U7EYWgeggW/RrK6lbsQTVeg0MOh",
-            "status": true
-        },
-        {
-            "shareKey": "6njTZ+JuthkTufj6rn17T0GPwLK5C5GGOzUdeQz8jcceggW/RrK6lbsQTVeg0MOh",
-            "status": false
-        }
-    ]
+	"v": "0.1.3bate_6",
+	"notice": "通知群1021185005",
+	"keyword": "👧💯👱👽👵💦🌸",
+	"treeShareCodesList": [
+		"👱🙉🌾👴🙈👧👱",
+		"🌺👻🙈😿👦👦💬",
+		"💨👾🙈😻😻😿🌾",
+		"🌻🌻😺👧👦😻🙀",
+		"🍀💣🌾💫👩👵👾",
+		"👧💮😺🌾😺💣",
+		"🌵👴👻😸😼💫👽",
+		"👩🙊😹💦😹👴💮",
+		"😺💫🙉👦💥🙉🙀"
+	],
+	"stationShareCodesList": [
+		"GazmR5l",
+		"6BvK1q9",
+		"e95YMlr",
+		"BogvLjA",
+		"2eRbxy1",
+		"r1y8bA",
+		"A6V0DJx",
+		"2DNZgrg"
+	],
+	"zeroLotteryShareCodesModeGetList": [
+		"6amPp2Q",
+		"N639EZ2",
+		"4RPDG92",
+		"pwodvZB",
+		"jrP0p8A",
+		"a2eBMkq",
+		"n68EKaD",
+		"GXwWrQ1",
+		"o4qjWQd",
+		"xvgRWNZ",
+		"Lvb2Ya",
+		"4ZrELDO",
+		"8LQpG8",
+		"zVqm92v",
+		"M59VLK2",
+		"ZoDpXVa",
+		"ZjzV05v",
+		"23gMd4d"
+	],
+	"keywords": [
+		{
+			"keyword": "🌴🙀🌸💣👩🌱🌹",
+			"status": false
+		},
+		{
+			"keyword": "💫👵👵👶👴🌷👴",
+			"status": false
+		}
+	],
+	"stationShareCodes": [
+		{
+			"id": 2520,
+			"shareUserId": 1630362958,
+			"status": true
+		},
+		{
+			"id": 2514,
+			"shareUserId": 1630362958,
+			"status": false
+		}
+	],
+	"zeroLotteryShareCodesModeGet": [
+		{
+			"shareKey": "XmZAqa5",
+			"status": false
+		}
+	],
+	"zeroLotteryShareCodes": [
+		{
+			"shareKey": "6njTZ+JuthkTufj6rn17T4bqAfsp/rYTeoUqJKrWpMAeggW/RrK6lbsQTVeg0MOh",
+			"status": false
+		},
+		{
+			"shareKey": "6njTZ+JuthkTufj6rn17T7sFz/QgTQ2zwpS63U7EYWgeggW/RrK6lbsQTVeg0MOh",
+			"status": true
+		},
+		{
+			"shareKey": "6njTZ+JuthkTufj6rn17T0GPwLK5C5GGOzUdeQz8jcceggW/RrK6lbsQTVeg0MOh",
+			"status": false
+		}
+	]
 }
