@@ -22,7 +22,7 @@ function Env(t, s) {
         isLoon() {
             return "undefined" != typeof $loon;
         }
-        loaddata() {
+        async loaddata() {
             if (!this.isNode()) return {};
             this.fs = this.fs ? this.fs : require("fs");
             this.path = this.path ? this.path : require("path");
@@ -30,17 +30,12 @@ function Env(t, s) {
                 s = this.path.resolve(process.cwd(), this.dataFile),
                 e = this.fs.existsSync(t),
                 i = !e && this.fs.existsSync(s);
-            if (!e && !i) return {};
+            if (!e && !i) this.writeFile(this.dataFile, JSON.stringify([]));
             const pt = e ? t : s;
-            return new Promise((resolve, reject) => {
-                this.fs.readFile(pt, "utf8", (r, o) => {
-                    if (r) reject({});
-                    else o = this.isJSONString(o) ? JSON.parse(o) : o;
-                    resolve(o);
-                });
-            });
+            let r = await this.readFile(pt);
+            return r
         }
-        writedata() {
+        async writedata() {
             if (!this.isNode()) return;
             this.fs = this.fs ? this.fs : require("fs");
             this.path = this.path ? this.path : require("path");
@@ -50,6 +45,20 @@ function Env(t, s) {
                 i = !e && this.fs.existsSync(s);
             const o = JSON.stringify(this.data, null, 2);
             const pt = e ? t : i ? s : t;
+            await writeFile(pt, o)
+        }
+        readFile(pt) {
+            this.fs = this.fs ? this.fs : require("fs");
+            return new Promise((resolve, reject) => {
+                this.fs.readFile(pt, "utf8", (r, o) => {
+                    if (r) reject({});
+                    else o = this.isJSONString(o) ? JSON.parse(o) : o;
+                    resolve(o);
+                });
+            });
+        }
+        writeFile(pt, o) {
+            this.fs = this.fs ? this.fs : require("fs");
             return new Promise((resolve, reject) => {
                 this.fs.writeFile(pt, o, (r) => {
                     if (r) reject(r);
