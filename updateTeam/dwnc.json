@@ -3,73 +3,9 @@
 	"notice": "通知群1021185005  AD:羊毛活动看朋友圈🛰️wc-388",
 	"keyword": "👧💯👱👽👵💦🌸",
 	"treeShareCodesList": [
-		"🌾😺😸💨😻👨🙉",
-		"🌿😸💮💨🌸🌹",
-		"🌿🌹😾😾😻👴",
-		"🌷💬🌱🌷🍀💣💬",
-		"💣👧🙉💦💐👦💮",
-		"🌷🌷👱🌻💮👽👱",
-		"💣👵💣🙈💦😾😾",
-		"👾🍀💫🌷👦🌿😽"
 	],
 	"stationShareCodesList": [
-		"lP7Qpw",
-		"OEOQ9zb",
-		"jlMN9j",
-		"NmKmjDW",
-		"gw4wQdK",
-		"Ynv2xwg",
-		"z1vW28m"
 	],
 	"zeroLotteryShareCodesModeGetList": [
-		"MYOo74J",
-		"BPXG4m",
-		"ZLdKNW9",
-		"Xxkx6GN",
-		"kaKaGMx",
-		"BDOadQj",
-		"qM8ZX1D"
-	],
-	"keywords": [
-		{
-			"keyword": "🌴🙀🌸💣👩🌱🌹",
-			"status": false
-		},
-		{
-			"keyword": "💫👵👵👶👴🌷👴",
-			"status": false
-		}
-	],
-	"stationShareCodes": [
-		{
-			"id": 2520,
-			"shareUserId": 1630362958,
-			"status": true
-		},
-		{
-			"id": 2514,
-			"shareUserId": 1630362958,
-			"status": false
-		}
-	],
-	"zeroLotteryShareCodesModeGet": [
-		{
-			"shareKey": "XmZAqa5",
-			"status": false
-		}
-	],
-	"zeroLotteryShareCodes": [
-		{
-			"shareKey": "6njTZ+JuthkTufj6rn17T4bqAfsp/rYTeoUqJKrWpMAeggW/RrK6lbsQTVeg0MOh",
-			"status": false
-		},
-		{
-			"shareKey": "6njTZ+JuthkTufj6rn17T7sFz/QgTQ2zwpS63U7EYWgeggW/RrK6lbsQTVeg0MOh",
-			"status": true
-		},
-		{
-			"shareKey": "6njTZ+JuthkTufj6rn17T0GPwLK5C5GGOzUdeQz8jcceggW/RrK6lbsQTVeg0MOh",
-			"status": false
-		}
 	]
 }
