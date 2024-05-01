@@ -97,8 +97,8 @@ async function checkEnv() {
 //Env Api =============================
 /*
 *   @modifyAuthor @smallfawn 
-*   @modifyTime 2024-03-25
-*   @modifyInfo 重写请求函数 在got环境或axios环境都可以请求 删除不必要的函数
+*   @modifyTime 2024-05-01
+*   @modifyInfo 抽离操作文件的函数
 */
 function Env(t, s) {
     return new (class {
@@ -123,76 +123,6 @@ function Env(t, s) {
         }
         isLoon() {
             return "undefined" != typeof $loon;
-        }
-        async loaddata() {
-            if (!this.isNode()) return {};
-            this.fs = this.fs ? this.fs : require("fs");
-            this.path = this.path ? this.path : require("path");
-            const t = this.path.resolve(this.dataFile),
-                s = this.path.resolve(process.cwd(), this.dataFile),
-                e = this.fs.existsSync(t),
-                i = !e && this.fs.existsSync(s);
-            if (!e && !i) this.writeFile(this.dataFile, JSON.stringify([]));
-            const pt = e ? t : s;
-            let r = await this.readFile(pt);
-            return r
-        }
-        async writedata() {
-            if (!this.isNode()) return;
-            this.fs = this.fs ? this.fs : require("fs");
-            this.path = this.path ? this.path : require("path");
-            const t = this.path.resolve(this.dataFile),
-                s = this.path.resolve(process.cwd(), this.dataFile),
-                e = this.fs.existsSync(t),
-                i = !e && this.fs.existsSync(s);
-            const o = JSON.stringify(this.data, null, 2);
-            const pt = e ? t : i ? s : t;
-            await writeFile(pt, o)
-        }
-        readFile(pt) {
-            this.fs = this.fs ? this.fs : require("fs");
-            return new Promise((resolve, reject) => {
-                this.fs.readFile(pt, "utf8", (r, o) => {
-                    if (r) reject({});
-                    else o = this.isJSONString(o) ? JSON.parse(o) : o;
-                    resolve(o);
-                });
-            });
-        }
-        writeFile(pt, o) {
-            this.fs = this.fs ? this.fs : require("fs");
-            return new Promise((resolve, reject) => {
-                this.fs.writeFile(pt, o, (r) => {
-                    if (r) reject(r);
-                    else resolve();
-                });
-            });
-        }
-        async getval(t) {
-            if (this.isSurge() || this.isLoon()) {
-                return $persistentStore.read(t);
-            } else if (this.isQuanX()) {
-                return $prefs.valueForKey(t);
-            } else if (this.isNode()) {
-                this.data = await this.loaddata();
-                return await this.data[t];
-            } else {
-                return (this.data && this.data[t]) || null;
-            }
-        }
-        async setval(t, s) {
-            if (this.isSurge() || this.isLoon()) {
-                return $persistentStore.write(t, s);
-            } else if (this.isQuanX()) {
-                return $prefs.setValueForKey(t, s);
-            } else if (this.isNode()) {
-                this.data = await this.loaddata();
-                this.data[s] = t;
-                await this.writedata();
-                return true;
-            } else {
-                return (this.data && this.data[s]) || null;
-            }
         }
         initRequestEnv(t) {
             try {
@@ -428,3 +358,4 @@ function Env(t, s) {
         }
     })(t, s);
 }
+class Bucket { constructor(fileName) { this.fileName = fileName; this.ensureFileExists(); this.data = this.readFile() } ensureFileExists() { this.fs ? this.fs : this.fs = require('fs'); this.path ? this.path : this.path = require('path'); this.filePath = this.path.join(__dirname, this.fileName); if (!this.fs.existsSync(this.filePath)) { this.fs.writeFileSync(this.filePath, '{}') } } readFile() { try { const data = this.fs.readFileSync(this.filePath, 'utf-8'); return JSON.parse(data) } catch (error) { console.error(`Error reading file:${error}`); return {} } } writeFile() { try { this.fs.writeFileSync(this.filePath, JSON.stringify(this.data, null, 2)) } catch (error) { } } set(key, value) { this.data[key] = value; this.writeFile() } get(key) { return this.data[key] } }
