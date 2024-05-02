@@ -104,7 +104,6 @@ function Env(t, s) {
     return new (class {
         constructor(t, s) {
             this.name = t;
-            this.data = null;
             this.logs = [];
             this.logSeparator = "\n";
             this.startTime = new Date().getTime();
