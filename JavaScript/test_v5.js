@@ -105,7 +105,6 @@ function Env(t, s) {
         constructor(t, s) {
             this.name = t;
             this.data = null;
-            this.dataFile = "box.dat";
             this.logs = [];
             this.logSeparator = "\n";
             this.startTime = new Date().getTime();
