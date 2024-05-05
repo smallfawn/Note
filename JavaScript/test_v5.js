@@ -33,7 +33,7 @@ class Task {
             method: method,
             headers: headers
         }
-        method !== "get" ? "" : Object.assign(reqeuestOptions, { body: body })
+        method == "get" ? "" : Object.assign(reqeuestOptions, { body: body })
         let { body: result } = await $.httpRequest(reqeuestOptions)
         return result
     }
