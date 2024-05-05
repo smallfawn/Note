@@ -100,6 +100,12 @@ async function checkEnv() {
 *   @modifyTime 2024-05-01
 *   @modifyInfo 抽离操作文件的函数
 */
+//Env Api =============================
+/*
+ *   @modifyAuthor @smallfawn
+ *   @modifyTime 2024-05-01
+ *   @modifyInfo 抽离操作文件的函数
+ */
 function Env(t, s) {
     return new (class {
         constructor(t, s) {
@@ -181,10 +187,10 @@ function Env(t, s) {
         }
         async sendMsg(message) {
             if (!message) return;
-            if ($.isNode()) {
-                await notify.sendNotify($.name, message);
+            if (this.isNode()) {
+                await notify.sendNotify(this.name, message);
             } else {
-                $.msg($.name, "", message);
+                this.msg(this.name, "", message);
             }
         }
         async httpRequest(options) {
@@ -356,4 +362,44 @@ function Env(t, s) {
         }
     })(t, s);
 }
-class Bucket { constructor(fileName) { this.fileName = fileName; this.ensureFileExists(); this.data = this.readFile() } ensureFileExists() { this.fs ? this.fs : this.fs = require('fs'); this.path ? this.path : this.path = require('path'); this.filePath = this.path.join(__dirname, this.fileName); if (!this.fs.existsSync(this.filePath)) { this.fs.writeFileSync(this.filePath, '{}') } } readFile() { try { const data = this.fs.readFileSync(this.filePath, 'utf-8'); return JSON.parse(data) } catch (error) { console.error(`Error reading file:${error}`); return {} } } writeFile() { try { this.fs.writeFileSync(this.filePath, JSON.stringify(this.data, null, 2)) } catch (error) { } } set(key, value) { this.data[key] = value; this.writeFile() } get(key) { return this.data[key] } }
+function Bucket() {
+    return new (class {
+        constructor(fileName) {
+            this.fileName = fileName;
+            this.ensureFileExists();
+            this.data = this.readFile();
+        }
+        ensureFileExists() {
+            this.fs ? this.fs : (this.fs = require("fs"));
+            this.path ? this.path : (this.path = require("path"));
+            this.filePath = this.path.join(__dirname, this.fileName);
+            if (!this.fs.existsSync(this.filePath)) {
+                this.fs.writeFileSync(this.filePath, "{}");
+            }
+        }
+        readFile() {
+            try {
+                const data = this.fs.readFileSync(this.filePath, "utf-8");
+                return JSON.parse(data);
+            } catch (error) {
+                console.error(`Error reading file:${error}`);
+                return {};
+            }
+        }
+        writeFile() {
+            try {
+                this.fs.writeFileSync(
+                    this.filePath,
+                    JSON.stringify(this.data, null, 2)
+                );
+            } catch (error) { }
+        }
+        set(key, value) {
+            this.data[key] = value;
+            this.writeFile();
+        }
+        get(key) {
+            return this.data[key];
+        }
+    })();
+}
