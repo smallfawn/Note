@@ -58,6 +58,9 @@ class Task {
 
 
 !(async () => {
+    console.log(`==================================================\n 脚本执行 - 北京时间(UTC+8): ${new Date(
+        new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
+    ).toLocaleString()} \n==================================================`);
     if (!(await checkEnv())) return;
     if (userList.length > 0) {
         let taskall = [];
@@ -94,12 +97,6 @@ async function checkEnv() {
     }
     return console.log(`共找到${userList.length}个账号`), true; //true == !0
 }
-//Env Api =============================
-/*
-*   @modifyAuthor @smallfawn 
-*   @modifyTime 2024-05-01
-*   @modifyInfo 抽离操作文件的函数
-*/
 //Env Api =============================
 /*
  *   @modifyAuthor @smallfawn
