@@ -25,7 +25,6 @@ class Task {
     }
 
     async user_info() {
-        try {
             let result = await this.taskRequest("get", `https://echo.apipost.cn/get.php`)
             console.log(result);
             if (result.errcode == 0) {
@@ -36,9 +35,6 @@ class Task {
                 this.ckStatus = false;
                 //console.log(result);
             }
-        } catch (e) {
-            console.log(e);
-        }
     }
 
     async taskRequest(method, url, body = "") {
