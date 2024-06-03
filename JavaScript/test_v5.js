@@ -18,28 +18,15 @@ class Task {
     constructor(str) {
         this.index = ++userIdx;
         this.ck = str.split(strSplitor)[0]; //单账号多变量分隔符
-        this.host = "echo.apipost.cn";
-        this.hostname = "https://" + this.host;
         this.ckStatus = true;
     }
     async main() {
         await this.user_info();
     }
-    async taskRequest(method, url, body = "") {
-        //
-        let headers = {}
-        const reqeuestOptions = {
-            url: url,
-            method: method,
-            headers: headers
-        }
-        method == "get" ? "" : Object.assign(reqeuestOptions, { body: body })
-        let { body: result } = await $.httpRequest(reqeuestOptions)
-        return result
-    }
+
     async user_info() {
         try {
-            let result = await this.taskRequest("get", `${this.hostname}/get.php`)
+            let result = await this.taskRequest("get", `https://echo.apipost.cn/get.php`)
             console.log(result);
             if (result.errcode == 0) {
                 $.log(`✅账号[${this.index}]  欢迎用户: ${result.errcode}🎉`)
@@ -52,6 +39,17 @@ class Task {
         } catch (e) {
             console.log(e);
         }
+    }
+
+    async taskRequest(method, url, body = "") {
+        let headers = {}
+        const reqeuestOptions = {
+            url: url,
+            method: method,
+            headers: headers
+        }
+        let { body: result } = await $.httpRequest(reqeuestOptions)
+        return result
     }
 }
 
