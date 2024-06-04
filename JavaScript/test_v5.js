@@ -42,7 +42,8 @@ class Task {
         const reqeuestOptions = {
             url: url,
             method: method,
-            headers: headers
+            headers: headers,
+            body:body
         }
         let { body: result } = await $.httpRequest(reqeuestOptions)
         return result
