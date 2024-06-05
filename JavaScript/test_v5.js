@@ -281,49 +281,52 @@ function Env(t, s) {
                 "q+": Math.floor((new Date().getMonth() + 3) / 3),
                 S: new Date().getMilliseconds(),
             };
-            /(y+)/.test(t) &&
-                (t = t.replace(
-                    RegExp.$1,
-                    (new Date().getFullYear() + "").substr(4 - RegExp.$1.length)
-                ));
-            for (let e in s)
-                new RegExp("(" + e + ")").test(t) &&
-                    (t = t.replace(
-                        RegExp.$1,
-                        1 == RegExp.$1.length
-                            ? s[e]
-                            : ("00" + s[e]).substr(("" + s[e]).length)
-                    ));
+            /(y+)/.test(t) && (t = t.replace(RegExp.$1, (new Date().getFullYear() + "").substr(4 - RegExp.$1.length)));
+            for (let e in s) {
+                new RegExp("(" + e + ")").test(t) && (t = t.replace(RegExp.$1, 1 == RegExp.$1.length ? s[e] : ("00" + s[e]).substr(("" + s[e]).length)));
+            }
             return t;
-        }
-        msg(s = t, e = "", i = "", o) {
-            const h = (t) =>
-                !t || (!this.isLoon() && this.isSurge())
-                    ? t
-                    : "string" == typeof t
-                        ? this.isLoon()
-                            ? t
-                            : this.isQuanX()
-                                ? { "open-url": t }
-                                : void 0
-                        : "object" == typeof t && (t["open-url"] || t["media-url"])
-                            ? this.isLoon()
-                                ? t["open-url"]
-                                : this.isQuanX()
-                                    ? t
-                                    : void 0
-                            : void 0;
-            this.isMute ||
-                (this.isSurge() || this.isLoon()
-                    ? $notification.post(s, e, i, h(o))
-                    : this.isQuanX() && $notify(s, e, i, h(o)));
+        };
+        msg(title = t, subtitle = "", body = "", options) {
+            const formatOptions = (options) => {
+                if (!options || (!this.isLoon() && this.isSurge())) {
+                    return options;
+                } else if (typeof options === "string") {
+                    if (this.isLoon()) {
+                        return options;
+                    } else if (this.isQuanX()) {
+                        return { "open-url": options };
+                    } else {
+                        return undefined;
+                    }
+                } else if (typeof options === "object" && (options["open-url"] || options["media-url"])) {
+                    if (this.isLoon()) {
+                        return options["open-url"];
+                    } else if (this.isQuanX()) {
+                        return options;
+                    } else {
+                        return undefined;
+                    }
+                } else {
+                    return undefined;
+                }
+            };
+
+            if (!this.isMute) {
+                if (this.isSurge() || this.isLoon()) {
+                    $notification.post(title, subtitle, body, formatOptions(options));
+                } else if (this.isQuanX()) {
+                    $notify(title, subtitle, body, formatOptions(options));
+                }
+            }
+
             let logs = ["", "==============📣系统通知📣=============="];
-            logs.push(t);
-            e ? logs.push(e) : "";
-            i ? logs.push(i) : "";
+            logs.push(title);
+            subtitle ? logs.push(subtitle) : "";
+            body ? logs.push(body) : "";
             console.log(logs.join("\n"));
             this.logs = this.logs.concat(logs);
-        }
+        };
         log(...t) {
             t.length > 0 && (this.logs = [...this.logs, ...t]),
                 console.log(t.join(this.logSeparator));
