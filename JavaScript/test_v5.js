@@ -159,7 +159,6 @@ function Env(t, s) {
         this.msg(this.name, "", message);
       }
     }
-
     randomNumber(length) {
       const characters = "0123456789";
       return Array.from(
@@ -173,9 +172,6 @@ function Env(t, s) {
         { length },
         () => characters[Math.floor(Math.random() * characters.length)]
       ).join("");
-    }
-    timeStamp() {
-      return new Date().getTime();
     }
     uuid() {
       return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
