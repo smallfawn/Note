@@ -62,7 +62,7 @@ class Task {
   if (!(await checkEnv())) return;
   let taskall = [];
   for (let user of userList) {
-    taskall.push(await user.main());
+    taskall.push(user.main());
   }
   await Promise.all(taskall);
 
