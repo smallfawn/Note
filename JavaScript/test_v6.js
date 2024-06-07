@@ -54,7 +54,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 })().catch((e) => console.log(e)).finally(() => $.done());
 
 async function test() {
-    let { data: result } = await Request({ method: "GET", url: `https://echo.apipost.cn/get.php` })
+    let { data: result } = await Request({ method: "GET", url: `https://echo.apipost.cn/get.php`,headers:{"User-Agent":"test"} })
     $.log(result)
 }
 
