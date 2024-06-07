@@ -56,10 +56,6 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 
 
 function checkEnv(userCookie) {
-  if (!userCookie) {
-    console.log(`未找到CK【${ckName}】`);
-    return;
-  }
   const envSplitor = ["&", "\n"];
   console.log(userCookie);
   let userList = userCookie
