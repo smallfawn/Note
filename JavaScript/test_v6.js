@@ -39,11 +39,11 @@ const notify = $.isNode() ? require("./sendNotify") : "";
   );
   //console.log(userCookie)
   if (!userCookie?.length) return console.log(`没有找到CK哦`);
-  let index = 0;
+  let index = 1;
   let strSplitor = "#";
 
   for (let user of userCookie) {
-    $.log(`\n🚀 user:【${index || ++index}】 start work\n`);
+    $.log(`\n🚀 user:【${index || index++}】 start work\n`);
     $.id = user.split(strSplitor)[0];
     $.ckStatus = false;
   }
@@ -74,7 +74,7 @@ async function Request(options) {
       try {
         return await axios.request(options);
       } catch (error) {
-        throw error && error.error ? error.error : "请求失败";
+        return error && error.error ? error.error : "请求失败";
       }
     };
   }
@@ -83,7 +83,7 @@ async function Request(options) {
       try {
         return await $task.fetch(options);
       } catch (error) {
-        throw error && error.error ? error.error : "请求失败";
+        return error && error.error ? error.error : "请求失败";
       }
     };
   }
