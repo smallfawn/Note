@@ -43,7 +43,8 @@ const notify = $.isNode() ? require("./sendNotify") : "";
   let strSplitor = "#";
 
   for (let user of userCookie) {
-    $.log(`\n🚀 user:【${index || index++}】 start work\n`);
+    $.log(`\n🚀 user:【${index }】 start work\n`);
+    index++
     $.id = user.split(strSplitor)[0];
     $.ckStatus = true;
   }
