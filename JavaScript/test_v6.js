@@ -45,7 +45,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
   for (let user of userCookie) {
     $.log(`\n🚀 user:【${index || index++}】 start work\n`);
     $.id = user.split(strSplitor)[0];
-    $.ckStatus = false;
+    $.ckStatus = true;
   }
 
   await $.sendMsg($.logs.join("\n"));
