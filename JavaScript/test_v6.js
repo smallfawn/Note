@@ -58,7 +58,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 
 function checkEnv(userCookie) {
     const envSplitor = ["&", "\n"];
-    console.log(userCookie);
+    //console.log(userCookie);
     let userList = userCookie
         .split(envSplitor.find((o) => userCookie.includes(o)) || "&")
         .filter((n) => n);
