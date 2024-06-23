@@ -261,7 +261,7 @@ function Env(t, s) {
     }
   })(t, s);
 }
-function Bucket() {
+function Bucket(fileName) {
   return new (class {
     constructor(fileName) {
       this.fileName = fileName;
@@ -300,5 +300,5 @@ function Bucket() {
     get(key) {
       return this.data[key];
     }
-  })();
+  })(fileName);
 }
