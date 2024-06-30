@@ -25,7 +25,7 @@ hostname =
 const $ = new Env("测试");
 let ckName = `test`;
 let userCookie = checkEnv(
-    ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || ""
+    $.isNode() ? process.env[ckName] : ""
 );
 const notify = $.isNode() ? require("./sendNotify") : "";
 
@@ -57,6 +57,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 
 
 function checkEnv(userCookie) {
+    if (!userCookie) return [];
     const envSplitor = ["&", "\n"];
     //console.log(userCookie);
     let userList = userCookie
