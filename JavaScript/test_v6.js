@@ -211,8 +211,9 @@ async function httpRequest(options) {
 async function sendMsg(message) {
     if (!message) return;
     if ($.isNode()) {
-        await notify.sendNotify(this.name, message);
+        await notify.sendNotify($.name, message);
     } else {
-        $.msg(this.name, "", message);
+        $.msg($.name, "", message);
     }
 }
+
