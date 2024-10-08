@@ -4,13 +4,7 @@
 @Date: 2024.06.07 19:15
 @Description: 测试
 ------------------------------------------
-
-[Script]
-http-response
-
-[MITM]
-hostname = 
-
+#Notice:
 ⚠️【免责声明】
 ------------------------------------------
 1、此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
@@ -80,14 +74,4 @@ async function Request(options) {
             }
         };
     }
-    if ($.isQuanX()) {
-        Request = async (options) => {
-            try {
-                return await $task.fetch(options);
-            } catch (error) {
-                return error && error.error ? error.error : "请求失败";
-            }
-        };
-    }
-    return await Request(options);
 }
