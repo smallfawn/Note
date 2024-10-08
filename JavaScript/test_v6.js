@@ -201,13 +201,11 @@ function Env(t, s) {
 async function httpRequest(options) {
     if ($.isNode()) {
         const axios = require("axios");
-        httpRequest = async (options) => {
             try {
                 return await axios.request(options);
             } catch (error) {
                 return error && error.error ? error.error : "请求失败";
             }
-        };
     }
 }
 async function sendMsg(message) {
