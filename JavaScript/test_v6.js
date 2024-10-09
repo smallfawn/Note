@@ -42,7 +42,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
         $.id = user.split(strSplitor)[0];
         $.ckStatus = true;
     }
-
+    if (!notify) return;
     await sendMsg($.logs.join("\n"));
 })()
     .catch((e) => console.log(e))
@@ -201,11 +201,11 @@ function Env(t, s) {
 async function httpRequest(options) {
     if ($.isNode()) {
         const axios = require("axios");
-            try {
-                return await axios.request(options);
-            } catch (error) {
-                return error && error.error ? error.error : "请求失败";
-            }
+        try {
+            return await axios.request(options);
+        } catch (error) {
+            return error && error.error ? error.error : "请求失败";
+        }
     }
 }
 async function sendMsg(message) {
@@ -216,4 +216,3 @@ async function sendMsg(message) {
         $.msg($.name, "", message);
     }
 }
-
