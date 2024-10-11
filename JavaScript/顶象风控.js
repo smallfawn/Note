@@ -93,7 +93,7 @@ async function main() {
         "hl": 2,
         "cl": 4,
         "st": 96743,//随机
-        "ct": 1, //1为抽奖页 可以用缓存生成TOKEN 2不可以缓存
+        "ct": 1, //1为抽奖页 2为主页 应该是判断是否为HOST页面
         "hlb": false,
         "hll": false,
         "hlo": false,
