@@ -41,7 +41,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
         await new Task(user).run();
     }
     if (!notify) return;
-    await sendMsg($.logs.join("\n"));
+    await new Public('').sendMsg($.logs.join("\n"));
 })()
     .catch((e) => console.log(e))
     .finally(() => $.done());
@@ -76,6 +76,14 @@ class Public {
             } catch (error) {
                 return error && error.error ? error.error : "请求失败";
             }
+        }
+    }
+    async sendMsg(message) {
+        if (!message) return;
+        if ($.isNode()) {
+            await notify.sendNotify($.name, message);
+        } else {
+            $.msg($.name, "", message);
         }
     }
 
@@ -235,14 +243,3 @@ function Env(t, s) {
     })(t, s);
 }
 
-async function httpRequest(options) {
-
-}
-async function sendMsg(message) {
-    if (!message) return;
-    if ($.isNode()) {
-        await notify.sendNotify($.name, message);
-    } else {
-        $.msg($.name, "", message);
-    }
-}
