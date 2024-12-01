@@ -45,16 +45,15 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 })()
     .catch((e) => console.log(e))
     .finally(() => $.done());
-
-
-
-class Task {
+class Task extends Public {
     constructor(user) {
+        super()
         token = user.split(strSplitor)[0];
     }
     async run() {
         try {
             await this.t();
+
         } catch (e) {
             console.log(e);
         }
@@ -64,6 +63,25 @@ class Task {
     }
 
 }
+class Public {
+    constructor(name) {
+        this.name = name;
+    }
+    //公共的方法
+    async request(options) {
+        if ($.isNode()) {
+            const axios = require("axios");
+            try {
+                return await axios.request(options);
+            } catch (error) {
+                return error && error.error ? error.error : "请求失败";
+            }
+        }
+    }
+
+}
+
+
 
 
 
@@ -218,14 +236,7 @@ function Env(t, s) {
 }
 
 async function httpRequest(options) {
-    if ($.isNode()) {
-        const axios = require("axios");
-        try {
-            return await axios.request(options);
-        } catch (error) {
-            return error && error.error ? error.error : "请求失败";
-        }
-    }
+
 }
 async function sendMsg(message) {
     if (!message) return;
