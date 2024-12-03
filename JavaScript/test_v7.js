@@ -20,7 +20,26 @@ const $ = new Env("北京现代");
 let ckName = `testA`;
 const strSplitor = "#";
 const envSplitor = ["&", "\n"];
+process.env[ckName] = "testA#testB&testC#testD"
 const notify = $.isNode() ? require("./sendNotify") : "";
+
+
+
+
+
+class Task {
+    constructor(env) {
+        this.index = $.userIdx++
+        let user = env.split("#");
+        this.name = user[0];
+        this.passwd = user[1];
+    }
+    async run() {
+        console.log(this.index);
+
+    }
+}
+
 
 !(async () => {
 
@@ -28,6 +47,8 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 
     for (let user of $.userList) {
         //
+        console.log(user)
+        await new Task(user).run();
 
     }
 
@@ -39,18 +60,11 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 
 
 
-
-
-
-
-
-
-
 // prettier-ignore
 function Env(t, s) {
     return new (class {
         constructor(t, s) {
-            this.userIdx = 0;
+            this.userIdx = 1;
             this.userList = [];
             this.userCount = 0;
             this.name = t;
