@@ -25,28 +25,26 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 const axios = require("axios");
 const defaultUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.31(0x18001e31) NetType/WIFI Language/zh_CN miniProgram"
 
-
-class Task {
+class Public {
+    async request(options) {
+        return await axios.request(options);
+    }
+}
+class Task extends Public {
     constructor(env) {
+
+        super();
         this.index = $.userIdx++
         let user = env.split("#");
         this.name = user[0];
         this.passwd = user[1];
     }
-    async request(options) {
-        return await axios.request(options);
-    }
-    async getNotice() {
-        let options = {
-            url: `https://gitee.com/smallfawn/Note/raw/main/Notice.json`,
-            headers: {
-                "User-Agent": defaultUserAgent,
-            }
-        }
-        let { data: res } = await this.request(options);
-        return res
-    }
+
+
     async run() {
+
+
+
         console.log(this.index);
 
     }
@@ -54,12 +52,12 @@ class Task {
 
 
 !(async () => {
-
+    await getNotice()
     $.checkEnv(ckName);
 
     for (let user of $.userList) {
         //
-        console.log(user)
+
         await new Task(user).run();
 
     }
@@ -69,7 +67,16 @@ class Task {
     .catch((e) => console.log(e))
     .finally(() => $.done());
 
-
+async function getNotice() {
+    let options = {
+        url: `https://gitee.com/smallfawn/Note/raw/main/Notice.json`,
+        headers: {
+            "User-Agent": defaultUserAgent,
+        }
+    }
+    let { data: res } = await new Public().request(options);
+    return res
+}
 
 
 // prettier-ignore
