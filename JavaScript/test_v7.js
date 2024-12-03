@@ -22,8 +22,7 @@ const strSplitor = "#";
 const envSplitor = ["&", "\n"];
 process.env[ckName] = "testA#testB&testC#testD"
 const notify = $.isNode() ? require("./sendNotify") : "";
-
-
+const axios = require("axios");
 
 
 
@@ -33,6 +32,9 @@ class Task {
         let user = env.split("#");
         this.name = user[0];
         this.passwd = user[1];
+    }
+    async request(options) {
+        return await axios.request(options);
     }
     async run() {
         console.log(this.index);
