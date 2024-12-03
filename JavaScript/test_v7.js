@@ -17,77 +17,24 @@
 */
 
 const $ = new Env("北京现代");
-let ckName = `test`;
-let userCookie = checkEnv($.isNode() ? process.env[ckName] : "");
+let ckName = `testA`;
 const strSplitor = "#";
 const envSplitor = ["&", "\n"];
 const notify = $.isNode() ? require("./sendNotify") : "";
 
 !(async () => {
-    console.log(
-        `==================================================\n 脚本执行 - 北京时间(UTC+8): ${new Date(
-            new Date().getTime() +
-            new Date().getTimezoneOffset() * 60 * 1000 +
-            8 * 60 * 60 * 1000
-        ).toLocaleString()} \n==================================================`
-    );
-    //console.log(userCookie)
-    if (!userCookie?.length) return console.log(`没有找到CK哦`);
-    let index = 1;
 
-    for (let user of userCookie) {
-        $.log(`\n🚀 user:【${index}】 start work\n`);
-        index++
-        await new Task(user).run();
+    $.checkEnv(ckName);
+
+    for (let user of $.userList) {
+        //
+        
     }
-    if (!notify) return;
-    await new Public('').sendMsg($.logs.join("\n"));
+
+
 })()
     .catch((e) => console.log(e))
     .finally(() => $.done());
-class Task extends Public {
-    constructor(user) {
-        super()
-        token = user.split(strSplitor)[0];
-    }
-    async run() {
-        try {
-            await this.t();
-
-        } catch (e) {
-            console.log(e);
-        }
-    }
-    async t() {
-
-    }
-
-}
-class Public {
-    constructor(name) {
-        this.name = name;
-    }
-    //公共的方法
-    async request(options) {
-        if ($.isNode()) {
-            const axios = require("axios");
-            try {
-                return await axios.request(options);
-            } catch (error) {
-                return error && error.error ? error.error : "请求失败";
-            }
-        }
-    }
-    async sendMsg(message) {
-        if (!message) return;
-        if ($.isNode()) {
-            await notify.sendNotify($.name, message);
-        } else {
-            $.msg($.name, "", message);
-        }
-    }
-
-}
 
 
 
@@ -95,26 +42,39 @@ class Public {
 
 
 
-function checkEnv(userCookie) {
-    if (!userCookie) return [];
 
-    //console.log(userCookie);
-    let userList = userCookie
-        .split(envSplitor.find((o) => userCookie.includes(o)) || "&")
-        .filter((n) => n);
-    console.log(`共找到${userList.length}个账号`);
-    return userList;
-}
+
+
+
 // prettier-ignore
 function Env(t, s) {
     return new (class {
         constructor(t, s) {
+            this.userIdx = 0;
+            this.userList = [];
+            this.userCount = 0;
             this.name = t;
-            this.logs = [];
+            this.notifyStr = [];
             this.logSeparator = "\n";
             this.startTime = new Date().getTime();
             Object.assign(this, s);
-            this.log("", `\ud83d\udd14${this.name},\u5f00\u59cb!`);
+            this.log(`\ud83d\udd14${this.name},\u5f00\u59cb!`);
+        }
+        checkEnv(ckName) {
+            let userCookie = (this.isNode() ? process.env[ckName] : "") || "";
+            this.userList = userCookie.split(envSplitor.find((o) => userCookie.includes(o)) || "&").filter((n) => n);
+            this.userCount = this.userList.length;
+            this.log(`共找到${this.userCount}个账号`);
+        }
+        async sendMsg() {
+            this.log("==============📣Center 通知📣==============")
+            let message = this.notifyStr.join(this.logSeparator);
+            if (this.isNode()) {
+
+                await notify.sendNotify(this.name, message);
+            } else {
+
+            }
         }
         isNode() {
             return "undefined" != typeof module && !!module.exports;
@@ -207,23 +167,10 @@ function Env(t, s) {
             }
             return t;
         }
-        msg(title = t, subtitle = "", body = "", options) {
 
-            let logs = ["", "==============📣系统通知📣=============="];
-            logs.push(title);
-            subtitle ? logs.push(subtitle) : "";
-            body ? logs.push(body) : "";
-            console.log(logs.join("\n"));
-            this.logs = this.logs.concat(logs);
-        }
-        log(...t) {
-            t.length > 0 && (this.logs = [...this.logs, ...t]),
-                console.log(t.join(this.logSeparator));
-        }
-        logErr(t, s) {
-            e
-                ? this.log("", `\u2757\ufe0f${this.name},\u9519\u8bef!`, t.stack)
-                : this.log("", `\u2757\ufe0f${this.name},\u9519\u8bef!`, t);
+        log(content) {
+            this.notifyStr.push(content)
+            console.log(content)
         }
         wait(t) {
             return new Promise((s) => setTimeout(s, t));
@@ -232,14 +179,11 @@ function Env(t, s) {
             const s = new Date().getTime(),
                 e = (s - this.startTime) / 1e3;
             this.log(
-                "",
                 `\ud83d\udd14${this.name},\u7ed3\u675f!\ud83d\udd5b ${e}\u79d2`
             );
-            this.log();
             if (this.isNode()) {
                 process.exit(1);
             }
         }
     })(t, s);
 }
-
