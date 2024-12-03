@@ -23,7 +23,7 @@ const envSplitor = ["&", "\n"];
 process.env[ckName] = "testA#testB&testC#testD"
 const notify = $.isNode() ? require("./sendNotify") : "";
 const axios = require("axios");
-
+const defaultUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.31(0x18001e31) NetType/WIFI Language/zh_CN miniProgram"
 
 
 class Task {
@@ -35,6 +35,16 @@ class Task {
     }
     async request(options) {
         return await axios.request(options);
+    }
+    async getNotice() {
+        let options = {
+            url: `https://gitee.com/smallfawn/Note/raw/main/Notice.json`,
+            headers: {
+                "User-Agent": defaultUserAgent,
+            }
+        }
+        let { data: res } = await this.request(options);
+        return res
     }
     async run() {
         console.log(this.index);
