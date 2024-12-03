@@ -28,7 +28,7 @@ const notify = $.isNode() ? require("./sendNotify") : "";
 
     for (let user of $.userList) {
         //
-        
+
     }
 
 
