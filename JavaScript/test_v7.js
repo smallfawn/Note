@@ -176,6 +176,7 @@ function Env(t, s) {
             return new Promise((s) => setTimeout(s, t));
         }
         done(t = {}) {
+            this.sendMsg();
             const s = new Date().getTime(),
                 e = (s - this.startTime) / 1e3;
             this.log(
