@@ -1,0 +1,10 @@
+services:
+  socks5:
+    image: serjs/go-socks5-proxy  # 使用的 Docker 镜像
+    container_name: socks5-proxy  # 容器名称
+    environment:
+      - PROXY_USER=username        # 设置用户名
+      - PROXY_PASSWORD=password  # 设置密码
+    ports:
+      - "1080:1080"              # 映射端口，主机的 1080 端口映射到容器的 1080 端口
+    restart: always              # 设置容器自动重启
