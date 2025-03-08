@@ -33,7 +33,7 @@ jobs:
         env:
           dewuCookie: ${{ secrets.dewuCookie }}
         run: |
-          node action/updateInvite.js
+          node action/updateDW.js
 
       - name: Save invite.json
         run: |
