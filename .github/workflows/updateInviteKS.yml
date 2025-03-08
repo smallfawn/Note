@@ -6,7 +6,7 @@ on:
   # 推送代码到 main 分支时触发
   schedule:
     #（UTC时间是16点，北京时间是0点）
-    - cron: '0 16 * * *'
+    - cron: '55 15 * * *'
 
 jobs:
   update-invite:
