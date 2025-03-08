@@ -1,17 +1,22 @@
 name: Update Invite
 
 on:
-  # 触发条件，例如手动运行或定时任务
+  # 手动触发
   workflow_dispatch:
-  # 或者在推送代码到特定分支时运行
+  # 推送代码到 main 分支时触发
   push:
     branches: [main]
+  # 定时任务，每天早上7点（中国时间）
+  schedule:
+    # 每天7点（UTC时间是23点，北京时间是7点）
+    - cron: '0 23 * * *'
 
 jobs:
   update-invite:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,13 +31,12 @@ jobs:
 
       - name: Run updateInvite.js script
         env:
-          dewuCookie: ${{ secrets.dewuCookie }} # 如果需要，可以在仓库设置中添加 API 密钥
+          dewuCookie: ${{ secrets.dewuCookie }}
         run: |
           node action/updateInvite.js
 
       - name: Save invite.json
         run: |
-          # 将生成的 invite.json 文件保存到仓库中
           git config --global user.name 'github-actions'
           git config --global user.email 'actions@github.com'
           git add dwinvite.json
