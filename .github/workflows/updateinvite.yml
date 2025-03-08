@@ -1,0 +1,40 @@
+name: Update Invite
+
+on:
+  # 触发条件，例如手动运行或定时任务
+  workflow_dispatch:
+  # 或者在推送代码到特定分支时运行
+  # push:
+  #   branches: [main]
+
+jobs:
+  update-invite:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Run updateInvite.js script
+        env:
+          dewuCookie: ${{ secrets.dewuCookie }} # 如果需要，可以在仓库设置中添加 API 密钥
+        run: |
+          node action/updateInvite.js
+
+      - name: Save invite.json
+        run: |
+          # 将生成的 invite.json 文件保存到仓库中
+          git config --global user.name 'github-actions'
+          git config --global user.email 'actions@github.com'
+          git add invite.json
+          git commit -m 'Update invite.json'
+          git push
