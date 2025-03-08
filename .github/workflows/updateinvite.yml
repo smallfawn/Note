@@ -8,8 +8,8 @@ on:
     branches: [main]
   # 定时任务，每天早上7点（中国时间）
   schedule:
-    # 每天7点（UTC时间是23点，北京时间是7点）
-    - cron: '0 23 * * *'
+    # 每天7点（UTC时间是0点，北京时间是8点）
+    - cron: '0 0 * * *'
 
 jobs:
   update-invite:
