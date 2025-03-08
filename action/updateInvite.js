@@ -70,6 +70,8 @@ async function fetchInviteData() {
 !(async () => {
     await freeLotteryInfo()
     await fetchInviteData()
+    console.log(invite);
+
     fs.writeFileSync('./dwinvite.json', JSON.stringify(invite, null, 2))
 
 })()
