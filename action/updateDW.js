@@ -4,6 +4,7 @@ const CryptoJS = require("crypto-js");
 let invite = [];
 let freeLotteryIds = [];
 let upupLotteryIds = [];
+let fishLotteryIds = [];
 const authToken = process.env.dewuCookie;
 async function freeLotteryInfo() {
     let data = {
@@ -117,6 +118,67 @@ async function upupLotteryGetShareCode(id) {
         }
     }
 }
+async function fishLotteryInfo() {
+    let data = {
+        "inner": true
+    }
+
+    let options = {
+        method: 'POST',
+        url: 'https://app.dewu.com/hacking-lucky/v1/activity/query-today?sign=' + calculateSign(data),
+        headers: {
+
+            'Content-Type': 'application/json',
+
+            'x-auth-token': 'Bearer ' + authToken,
+
+        },
+        data: data
+    };
+
+    let { data: res } = await axios.request(options);
+    if (res?.code == 200) {
+        if (res?.data?.activityList) {
+            for (let item of res?.data?.activityList) {
+                if (item["status"] == 2) {
+
+                    fishLotteryIds.push(item["id"]);
+                }
+            }
+        }
+    } else {
+        console.log(`海洋夺宝列表查询失败[${res.msg}]`);
+    }
+}
+async function fishLotteryGetShareCode(id) {
+
+    let data = {
+        "id": id,
+        "type": 2
+    }
+
+    let config = {
+        method: 'POST',
+        url: 'https://app.dewu.com/hacking-lucky/v1/activity/show-keyword?sign=' + calculateSign(data),
+        headers: {
+            "Content-Type": "application/json",
+
+            "x-auth-token": "Bearer " + authToken,
+        },
+        data: data
+    };
+
+
+
+    let { data: res } = await axios.request(config);
+    if (res?.code == 200) {
+        if (res?.data && res?.data?.keyword) {
+            invite.push(res?.data?.keyword);
+        }
+    }
+}
+
+
 
 !(async () => {
     await freeLotteryInfo();
@@ -126,6 +188,10 @@ async function upupLotteryGetShareCode(id) {
     await upupLotteryInfo();
     for (let id of upupLotteryIds) {
         await upupLotteryGetShareCode(id);
+    }
+    await fishLotteryInfo();
+    for (let id of fishLotteryIds) {
+        await fishLotteryGetShareCode(id);
     }
     console.log(invite);
 
