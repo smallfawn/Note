@@ -4,8 +4,8 @@ on:
   # 触发条件，例如手动运行或定时任务
   workflow_dispatch:
   # 或者在推送代码到特定分支时运行
-   push:
-     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   update-invite:

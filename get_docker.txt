@@ -9,7 +9,6 @@ set -e
 # at https://docs.docker.com/engine/install/ for alternative installation methods.
 #
 # The script:
-#
 # - Requires `root` or `sudo` privileges to run.
 # - Attempts to detect your Linux distribution and version and configure your
 #   package management system for you.
