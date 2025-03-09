@@ -4,12 +4,10 @@ on:
   # 手动触发
   workflow_dispatch:
   # 推送代码到 main 分支时触发
-  push:
-    branches: [main]
   # 定时任务，每天早上7点（中国时间）
   schedule:
-    # 每天7点（UTC时间是0点，北京时间是8点）
-    - cron: '0 0 * * *'
+    # 每天7点（UTC时间是0.30点，北京时间是8.30点）
+    - cron: '30 0 * * *'
 
 jobs:
   update-invite:
