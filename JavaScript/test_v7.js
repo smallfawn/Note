@@ -104,10 +104,7 @@ function Env(t, s) {
         async sendMsg() {
             this.log("==============📣Center 通知📣==============")
             for (let item of this.notifyStr) {
-                if (Object.prototype.toString.call(item) === '[object Object]') {
-                    item = JSON.stringify(item)
-                }
-                if (Object.prototype.toString.call(arg) === '[object Array]') {
+                if (Object.prototype.toString.call(item) === '[object Object]'||Object.prototype.toString.call(arg) === '[object Array]') {
                     item = JSON.stringify(item)
                 }
             }
