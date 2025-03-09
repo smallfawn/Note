@@ -66,7 +66,7 @@ class Task extends Public {
 
 })()
     .catch((e) => console.log(e))
-    .finally(() => $.done());
+    .finally(async() => await $.done());
 
 async function getNotice() {
     let options = {
@@ -104,7 +104,7 @@ function Env(t, s) {
         async sendMsg() {
             this.log("==============📣Center 通知📣==============")
             for (let item of this.notifyStr) {
-                if (Object.prototype.toString.call(item) === '[object Object]'||Object.prototype.toString.call(arg) === '[object Array]') {
+                if (Object.prototype.toString.call(item) === '[object Object]'||Object.prototype.toString.call(item) === '[object Array]') {
                     item = JSON.stringify(item)
                 }
             }
@@ -213,8 +213,8 @@ function Env(t, s) {
         wait(t) {
             return new Promise((s) => setTimeout(s, t));
         }
-        done(t = {}) {
-            this.sendMsg();
+        async done(t = {}) {
+            await this.sendMsg();
             const s = new Date().getTime(),
                 e = (s - this.startTime) / 1e3;
             this.log(
