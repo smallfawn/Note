@@ -177,6 +177,32 @@ async function fishLotteryGetShareCode(id) {
         }
     }
 }
+async function treeGetShareCode() {
+
+    let data = {
+        "keywordType": 0
+    }
+
+    let config = {
+        method: 'POST',
+        url: 'https://app.dewu.com/hacking-tree/v1/keyword/gen?sign=449f29a207b0098bfc17b4440b81dd99',
+        headers: {
+
+            'Content-Type': 'application/json',
+
+            'x-auth-token': 'Bearer ' + authToken,
+
+        },
+        data: data
+    };
+
+    let { data: res } = await axios.request(config);
+    if (res?.code == 200) {
+        if (res?.data && res?.data?.keyword) {
+            invite.push(res?.data?.keyword);
+        }
+    }
+}
 
 
 
@@ -193,6 +219,7 @@ async function fishLotteryGetShareCode(id) {
     for (let id of fishLotteryIds) {
         await fishLotteryGetShareCode(id);
     }
+    await treeGetShareCode();
     console.log(invite);
 
     fs.writeFileSync("./dwinvite.json", JSON.stringify(invite, null, 2));
