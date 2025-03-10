@@ -6,7 +6,7 @@ on:
   # 推送代码到 main 分支时触发
   schedule:
     #（UTC时间是16点，北京时间是0点）
-    - cron: '00 15 * * *'
+    - cron: "00 15 * * *"
 
 jobs:
   update-invite:
@@ -42,8 +42,8 @@ jobs:
       - name: update to gitee
         uses: Yikun/hub-mirror-action@master
         with:
-          src: 'github/${{ github.repository_owner }}'
-          dst: 'gitee/smallfawn'
+          src: "github/${{ github.repository_owner }}"
+          dst: "gitee/smallfawn"
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
           static_list: ${{ github.event.repository.name }}
