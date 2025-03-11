@@ -25,4 +25,3 @@ jobs:
           dst_token: ${{ secrets.GITLAB_TOKEN }}
           static_list: ${{ github.event.repository.name }}
           account_type: user
-          clone_style: https
