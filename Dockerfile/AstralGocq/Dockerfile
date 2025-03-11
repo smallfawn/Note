@@ -2,13 +2,13 @@
 FROM alpine:3.14
 
 # 复制 AG 文件夹到镜像的 /app 目录
-COPY AG /app/
+COPY AstralGocq /app/AstralGocq
 
 # 设置权限（单独一行）
-RUN chmod +x /app/AG
+RUN chmod +x /app/AstralGocq/AstralGocq
 
 # 设置工作目录（单独一行）
 WORKDIR /app
 
 # 定义启动命令
-CMD ["/app/AG"]
+CMD ["/app/AstralGocq/AstralGocq"]

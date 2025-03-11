@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ag-service:
+    # 使用自定义镜像
+    image: ag-image
+    # 构建上下文和 Dockerfile 路径
+    build:
+      context: .
+      dockerfile: Dockerfile.astralgocq
+    # 可选：挂载本地文件夹到容器（如果有需要）
+    volumes:
+      - ./AG:/app/AG
+    # 可选：设置环境变量（如果有需要）
+    environment:
+      - ENV_VAR1=value1
+      - ENV_VAR2=value2
+    # 可选：映射端口（如果有需要）
+    ports:
+      - "8080:80"
+    # 可选：设置容器重启策略
+    restart: unless-stopped
