@@ -1,14 +1,11 @@
-# 使用 alpine 基础镜像
-FROM alpine:3.14
+# 使用基础镜像
+FROM alpine:latest
 
-# 复制 AG 文件夹到镜像的 /app 目录
-COPY AstralGocq /app/
+# 设置作者信息
 
-# 设置权限（单独一行）
-RUN chmod +x /app/AstralGocq
-
-# 设置工作目录（单独一行）
+# 设置工作目录
 WORKDIR /app
 
-# 定义启动命令
-CMD ["/app/AstralGocq/AstralGocq"]
+# 启动AstralGocq
+CMD ["./AstralGocq"]
+
