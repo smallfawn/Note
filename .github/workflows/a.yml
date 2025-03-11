@@ -21,9 +21,8 @@ jobs:
         with:
           src: 'github/${{ github.repository_owner }}'
           dst: 'gitlab/smallfawn'
+          dst_key: ${{ secrets.GITLAB_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITLAB_TOKEN }}
           static_list: ${{ github.event.repository.name }}
           account_type: user
           clone_style: https
-          force_update: true
-          debug: true
