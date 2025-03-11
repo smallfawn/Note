@@ -5,7 +5,7 @@ FROM alpine:3.14
 COPY AstralGocq /app/AstralGocq
 
 # 设置权限（单独一行）
-RUN chmod +x /app/AstralGocq/AstralGocq
+RUN chmod +x /app/AstralGocq
 
 # 设置工作目录（单独一行）
 WORKDIR /app
