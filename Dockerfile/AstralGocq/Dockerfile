@@ -2,7 +2,7 @@
 FROM alpine:3.14
 
 # 复制 AG 文件夹到镜像的 /app 目录
-COPY AstralGocq /app/AstralGocq
+COPY AstralGocq /app/
 
 # 设置权限（单独一行）
 RUN chmod +x /app/AstralGocq
