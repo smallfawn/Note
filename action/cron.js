@@ -5,7 +5,6 @@ const REPO_OWNER = 'smallfawn'; // 替换为你的 GitHub 用户名
 const REPO_NAME = 'Note'; // 替换为你的仓库名
 const WORKFLOW_FILE = 'updateInviteKS.yml'; // 替换为你的 GitHub Action 工作流文件路径
 
-
 // GitHub 个人访问令牌
 const GITHUB_TOKEN = 'your-github-personal-access-token'; // 替换为你的 GitHub 个人访问令牌
 
