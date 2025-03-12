@@ -8,14 +8,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: update to gitee
-        uses: Yikun/hub-mirror-action@master
-        with:
-          src: 'github/${{ github.repository_owner }}'
-          dst: 'gitee/smallfawn'
-          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-          dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: ${{ github.event.repository.name }}
+      #- name: update to gitee
+        #uses: Yikun/hub-mirror-action@master
+        #with:
+          #src: 'github/${{ github.repository_owner }}'
+          #dst: 'gitee/smallfawn'
+          #dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          #dst_token: ${{ secrets.GITEE_TOKEN }}
+          #static_list: ${{ github.event.repository.name }}
       - name: update to gitlab
         uses: Yikun/hub-mirror-action@master
         with:
