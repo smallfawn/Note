@@ -31,7 +31,7 @@ class Task  {
     constructor(env) {
 
         this.index = $.userIdx++
-        let user = env.split("#");
+        let user = env.split(strSplitor);
         this.name = user[0];
         this.passwd = user[1];
     }
