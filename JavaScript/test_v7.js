@@ -74,7 +74,7 @@ async function getNotice() {
             "User-Agent": defaultUserAgent,
         }
     }
-    let { data: res } = await new Public().request(options);
+    let { data: res } = await axios.request(options);
     $.log(res)
     return res
 }
