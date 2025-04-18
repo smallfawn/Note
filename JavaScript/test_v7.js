@@ -30,7 +30,6 @@ const defaultUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X)
 class Task  {
     constructor(env) {
 
-        super();
         this.index = $.userIdx++
         let user = env.split("#");
         this.name = user[0];
