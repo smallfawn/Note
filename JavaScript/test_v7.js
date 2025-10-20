@@ -119,13 +119,8 @@ function Env(t, s) {
         }
 
         queryStr(options) {
-            return Object.entries(options)
-                .map(
-                    ([key, value]) =>
-                        `${key}=${typeof value === "object" ? JSON.stringify(value) : value
-                        }`
-                )
-                .join("&");
+            const queryString = require("querystring");
+            return queryString.stringify(options);
         }
         getURLParams(url) {
             const params = {};
