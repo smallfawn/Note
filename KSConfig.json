@@ -1,4 +1,13 @@
 {
   "version":"1022-01",
-  "invite":[]
+  "invite":[{
+        activityId: "123",
+        taskToken: "BnVIpMJYTmImXTS7HZwyawKYoIo_BIvfjFOFyhNuPxg",
+        invitorId: "5102259467",
+        extParams: '{"inviteeSource":"QR_CODE"}',
+      },{
+        invitorId: "5102259467",
+        activityId: "turntable_o1",
+        taskToken: "835sD3LrL1RqHwaeLmbazuLjPOqqIHI4WNleJ3TYim0",
+      }]
 }
