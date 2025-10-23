@@ -1,5 +1,5 @@
 {
-  "version": "1022-02",
+  "version": "1023-01",
   "invite": [
     {
       "activityId": "123",
@@ -11,6 +11,14 @@
       "invitorId": "5102259467",
       "activityId": "turntable_o1",
       "taskToken": "835sD3LrL1RqHwaeLmbazuLjPOqqIHI4WNleJ3TYim0"
+    }
+  ],
+  "invite2": [
+    {
+      "pUid": "rQUN2qkF-dH9Gi3tLzpaIMQgT7zS4_M162740af44ba70a6",
+      "traceDetail": "c1_sa_a16.e6.pac0b951a-7169-4688-a373-9c7aa22e5644.f4.5102259467.0.0_os",
+      "invitorId": "5102259467",
+      "extParams": "{\"inviteeSource\":\"QR_CODE\"}"
     }
   ]
 }
