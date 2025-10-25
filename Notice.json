@@ -1,6 +1,6 @@
 {
 	"notice": "QQ交流群：608903664  CK为开宝箱ck#salt#socks5://用户名:密码@IP:端口 格式很全！仅适配安卓,IOS转换CK黑号不管！ ",
 	"tips":"(添加新参数很稳定)新增osVersion=; oaid=; 两个COOKIE参数,怎么获取具体看https://ks.smallfawn.top介绍-如果oaid不是16位那么就不要写了 按默认的来",
-	"now":"如果脚本有BUG 请及时反馈。api开启时间为早上9.30-晚上9.30 因此 脚本运行时间请在次区间内",
+	"now":"如果脚本有BUG 请及时反馈[脚本定时每1小时或者1个半小时 执行一次 区间9.30-晚上9.30]。api开启时间为早上9.30-晚上9.30 因此 脚本运行时间请在次区间内",
 	"hbm":"扫码自动添加白名单[需要每天扫一次 否则请求超过100次进入黑名单]由本IP生成专属码 https://ks.smallfawn.top/static/zfbpyxhb.jpg?ZmFrZXBhcmFtcw=="
 }
