@@ -1,7 +1,7 @@
 {
     "notice": "QQ交流群：608903664   ksmaxreward建议改成3w而不是30w[30000]",
     "tips": "脚本变量格式参考https://ks.smallfawn.top介绍",
-    "now": "ksmaxtask_look 看广次数每轮默认50，ksmaxtask_food 饭补广告次数每轮默认10，ksmaxtask_box 宝箱广告每轮默认10",
+    "now": "kstask='look,food,box'，ksmaxtask_look 看广次数每轮默认50，ksmaxtask_food 饭补广告次数每轮默认10，ksmaxtask_box 宝箱广告每轮默认10",
     "yh": "使用此脚本必须养号:搜索标签:短剧/1688/百度极速版/支付宝黄金理财/腾讯元宝/淘宝/天猫/京东双11等",
     "signApi": "以下任选其一 获取不到就换地址",
     "sign": [
