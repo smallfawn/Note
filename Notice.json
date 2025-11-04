@@ -3,6 +3,7 @@
     "tips": "脚本变量格式参考https://ks.smallfawn.top介绍",
     "error": "6001报错一般是salt不对，服务器繁忙无解只能换号",
     "now": [
+        "kstask 默认 food,look,box,search 全开", 
         "ksmaxtask_look 看广告次数 每次运行 默认50",
         "ksmaxtask_food 饭补广次数 每次运行 默认10",
         "ksmaxtask_box  宝箱广次数 默认10",
