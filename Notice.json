@@ -5,6 +5,7 @@
     "now": [
         "kstask 默认 food,look,box,search 全开", 
         "ksmaxtask_look 看广告次数 每次运行 默认50",
+        "ksmaxtask_search 看搜索广告次数 每次运行 默认25",
         "ksmaxtask_food 饭补广次数 每次运行 默认10",
         "ksmaxtask_box  宝箱广次数 默认10",
         "kssignapi sign的地址",
