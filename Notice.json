@@ -10,7 +10,8 @@
         "ksmaxtask_box  宝箱广次数 默认10",
         "kssignapi sign的地址",
         "ksmaxreward 每次运行脚本每个账号最多多少金币 默认30000",
-        "ksispasslive 是否跳过直播 默认跳过  为false时不跳过 "
+        "ksispasslive 是否跳过直播 默认跳过  为false时不跳过 ",
+        "ksisadadd 是否开启追加广告 默认开启 false关闭"
     ],
     "yh": "使用此脚本必须养号:[关注搜索评论点赞]每天进行2-6次。搜索标签:短剧/1688/百度极速版/支付宝黄金理财/腾讯元宝/淘宝/天猫/京东双11等",
     "signApi": "以下任选其一 获取不到就换地址",
