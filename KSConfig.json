@@ -1,19 +1,24 @@
 {
-  "version": "20251105-gay",
-  "invite": [
-    {
-      "activityId": "123",
-      "taskToken": "BnVIpMJYTmImXTS7HZwyawKYoIo_BIvfjFOFyhNuPxg",
-      "invitorId": "5102259467",
-      "extParams": "{\"inviteeSource\":\"QR_CODE\"}"
-    },
-    {
-      "invitorId": "5102259467",
-      "activityId": "turntable_o1",
-      "taskToken": "835sD3LrL1RqHwaeLmbazuLjPOqqIHI4WNleJ3TYim0"
-    }
-  ],
-  "invite2": [
-    
-  ]
+    "version": "20251105-gay",
+    "signApiUrls": [
+        "http://cjupgscn.xsian.top",
+        "https://kspro.wkds.eu.org",
+        "https://ks.hnking.cn"
+    ],
+    "invite": [
+        {
+            "activityId": "123",
+            "taskToken": "BnVIpMJYTmImXTS7HZwyawKYoIo_BIvfjFOFyhNuPxg",
+            "invitorId": "5102259467",
+            "extParams": "{\"inviteeSource\":\"QR_CODE\"}"
+        },
+        {
+            "invitorId": "5102259467",
+            "activityId": "turntable_o1",
+            "taskToken": "835sD3LrL1RqHwaeLmbazuLjPOqqIHI4WNleJ3TYim0"
+        }
+    ],
+    "invite2": [
+
+    ]
 }
