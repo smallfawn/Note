@@ -10,7 +10,7 @@
         "ksmaxtask_box  宝箱广次数 默认10",
         "kssignapi sign的地址",
         "ksTaskNum  并发变量 最高支持10",
-        "ksextratask 是否开启额外任务 默认false",
+        "ksextratask 是否开启额外任务 默认true 开启",
         "ksmaxreward 每次运行脚本每个账号最多多少金币 默认30000",
         "ksispasslive 是否跳过直播 默认跳过  为false时不跳过 ",
         "ksisadadd 是否开启追加广告 默认开启 false关闭"
