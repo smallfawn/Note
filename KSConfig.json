@@ -1,7 +1,9 @@
 {
     "version": "20251105-gay",
     "signApiUrls": [
-        "http://ksksks.smallfawn.top"    ],
+        "http://ksksks.smallfawn.top",
+        "http://ks.apiplus.plus"
+    ],
     "invite": [
         {
             "activityId": "123",
