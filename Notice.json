@@ -1,6 +1,7 @@
 {
     "交流群": "608903664,551674817,1039504032 任意加一个就行",
     "变量格式": [
+        "ksnoDelay  是否开启无延迟模式 true开启"
         "ksck 开宝箱ck#salt#代理[可不写] 兼容万安和socks:// 或者socks5:// 群内公告有一键获取CK的方式无需ROOT",
         "kstask 默认 food,look,box,search 全开",
         "ksmaxtask_look 看广告次数 每次运行 默认50",
