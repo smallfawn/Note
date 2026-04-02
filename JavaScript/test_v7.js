@@ -3,13 +3,15 @@
 @Author: sm
 @Date: 2024.06.07 19:15
 @Description: 海底捞
-cron: 12 12 * * *
+cron: 8 30 * * *
 ------------------------------------------
 #Notice:   
-如果微信小程序抓包的写变量名hdlwx:
+如果微信小程序抓包的写变量值前面加上wx#
+例如wx#OPENID_#uid
 https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin 接口的请求参数openId#uid
-如果是APP抓包的写变量名hdlapp:
-自助获取token接口：
+如果是APP抓包的写变量值前面加上app#
+抓包https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin 接口的请求参数token
+例如app#TOKEN_APP_
 
 
 ⚠️【免责声明】
@@ -24,146 +26,135 @@ https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin
 */
 
 const { Env } = require("../tools/env")
-const $ = new Env("硬声");
-let ckName = `yingsheng`;
+const $ = new Env("海底捞");
+let ckName = `hdl`;
 const strSplitor = "#";
-process.env[ckName] = "15666655552#sndjdj"
+process.env[ckName] = ""
 const axios = require("axios");
 const defaultUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.31(0x18001e31) NetType/WIFI Language/zh_CN miniProgram"
-
-
 
 
 class Task {
     constructor(env) {
         this.index = $.userIdx++
-        let user = env.split(strSplitor);
-        this.name = user[0];
-        this.passwd = user[1];
-        this.auth = '';
-        this.device_id = '07cdc486c91ca0457e4263cfa9667aa7od'
+        this.user = env.split(strSplitor);
+        this.tokenType = this.user[0];
+        this.openId = null
+        this.uid = null
+        this.token = null
         this.valid = false;
-
+        this.name = ''
+        this.signinSource = ''
+        this.platformname = ''
     }
 
+    async run() {
+        if (this.tokenType == 'wx') {
+            this.platformname = 'wechat'
+            this.openId = this.user[1];
+            this.uid = this.user[2];
+            this.signinSource = 'MiniApp'
+            await this.wxLogin()
+            if (!this.valid) return;
 
-    async login() {
+        }
+        if (this.tokenType == 'app') {
+            this.token = this.user[1];
+            this.signinSource = 'APP'
+            this.platformname = 'app'
+        }
+        await this.info()
+        await this.signIn()
+    }
+    async wxLogin() {
         try {
-            let pwd = this.EncryptCrypto(this.passwd)
-            console.log(pwd)
-            let param = { 'account': this.name, 'password': pwd, 'device_id': this.device_id }
-            let url = `https://ysapi.elecfans.com/api/sso/accountLogin`
-            let body = $.jsonToStr(param, '&', true)
-            let headersParams = this.calculateSign(param, 'ysapi')
             let options = {
-                method: 'post',
-                url,
+                url: "https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin",
                 headers: {
-                    ...headersParams,
-                    "User-Agent": defaultUserAgent,
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    "_haidilao_app_token": "",
+                    "accept": "*/*",
+                    "accept-language": "zh-CN,zh;q=0.9",
+                    "appid": "15",
+                    "appname": "HDLMember",
+                    "appversion": "3.240.0",
+                    "content-type": "application/json",
+                    "platformname": this.platformname,
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "cross-site",
+                    "smdeviceid": "",
+                    "xweb_xhr": "1"
                 },
-                data: body
+                method: 'POST',
+                data: {
+                    "type": 1,
+                    "country": "CN",
+                    "codeType": 1,
+                    "business": "登录",
+                    "terminal": "会员小程序",
+                    "openId": "" + this.openId,
+                    "uid": "" + this.uid
+                }
             }
-            let { data: result } = await axios.request(options)
-            if (result.code == 0) {
-                this.valid = true
-                this.name = result.data.mobile
-                this.coins = result.data.coins
-                this.auth = result.data.Authorization
-                this.user_id = result.data.user_id
-                console.log(`登录成功`)
-                console.log(`手机：${this.name}`)
-                console.log(`硬币：${this.coins}`)
+            let { data: result } = await axios.request(options);
+            if (result.code == 100000) {
+                this.token = result.data.token
+                this.name = result.data.nickName
+                $.log(`账号[${this.index}]【${this.name}】 登录成功`);
+                this.valid = true;
             } else {
-                console.log(`登录失败: ${JSON.stringify(result)}`)
+                $.log(result);
             }
+
+
         } catch (e) {
-            console.log(e)
+
         } finally { }
     }
+    async signIn() {
+        let options = {
+            url: 'https://superapp-public.kiwa-tech.com/activity/wxapp/signin/signin',
+            headers: {
+                "platformname": this.platformname,
+                '_haidilao_app_token': this.token,
 
-    async getInfo() {
-        try {
-            let param = { 'user_id': this.user_id }
-            let url = `https://ysapi.elecfans.com/api/member/getInfo?${$.jsonToStr(param, '&')}`
-            let headersParams = this.calculateSign(param, 'ysapi')
-            let options = {
-                method: 'get',
-                url,
-                headers: {
-                    ...headersParams,
-                    "User-Agent": defaultUserAgent,
-                },
-            }
-            let { data: result } = await axios.request(options)
-            if (result.code == 0) {
-                this.coins = result.data.coins
-                console.log(`硬币：${this.coins}`)
-            } else {
-                console.log(`查询账户失败: ${result.message}`)
-            }
-        } catch (e) {
-            console.log(e)
+            },
+            method: 'POST',
+            data: { "signinSource": this.signinSource }
+        }
+        let { data: result } = await axios.request(options);
+        if (result['success']) {
+            $.log(`账号[${this.index}]【${this.name}】 签到成功`);
+        } else {
+            $.log(result);
+        }
+
+
+
+
+    }
+    async info() {
+        let options = {
+            url: 'https://superapp-public.kiwa-tech.com/activity/wxapp/signin/queryFragment',
+            headers: {
+                "platformname": this.platformname,
+                '_haidilao_app_token': this.token,
+            },
+            method: 'POST',
+            data: {}
+        }
+        let { data: result } = await axios.request(options);
+        if (result['success']) {
+            $.log(`账号[${this.index}]  剩余[${result.data.total}]本期碎片将于${result['data']['expireDate']}过期 `)
+        } else {
+            $.log(result);
         }
     }
 
-    async getSignStatus() {
-        try {
-            let param = { 'date': '' }
-            let url = `https://yingsheng.elecfans.com/ysapi/wapi/activity/signin/data?${$.jsonToStr(param, '&')}`
-            let headersParams = this.calculateSign(param, 'yingsheng')
-            let options = {
-                method: 'get',
-                url,
-                headers: {
-                    ...headersParams,
-                    "User-Agent": defaultUserAgent,
-                },
-            }
-            let { data: result } = await axios.request(options)
-            if (result.code == 0) {
-                if (result.data.data.today_is_sign == 1) {
-                    console.log(`今日已签到`)
-                } else {
-                    console.log(`今日未签到`)
-                    await $.wait(this.TASK_WAIT_TIME);
-                    await this.signin();
-                }
-            } else {
-                console.log(`查询签到状态失败: ${result.message}`)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
-    async signin() {
-        try {
-            let param = { 'date': '' }
-            let url = `https://yingsheng.elecfans.com/ysapi/wapi/activity/signin/signin`
-            let body = JSON.stringify(param)
-            let headersParams = this.calculateSign(param, 'yingsheng')
-            let options = {
-                method: 'post',
-                url,
-                headers: {
-                    ...headersParams,
-                    "User-Agent": defaultUserAgent,
-                    "Content-Type": "application/json"
-                },
-                data: body
-            }
-            let { data: result } = await axios.request(options)
-            if (result.code == 0) {
-                console.log(`签到成功，获得${result.data.coins}硬币`)
-            } else {
-                console.log(`签到失败: ${result.message}`)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
+
+
+
 
 
 }
