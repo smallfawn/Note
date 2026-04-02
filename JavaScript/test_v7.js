@@ -2,17 +2,11 @@
 ------------------------------------------
 @Author: sm
 @Date: 2024.06.07 19:15
-@Description: 海底捞
+@Description: babycare
 cron: 8 30 * * *
 ------------------------------------------
 #Notice:   
-如果微信小程序抓包的写变量值前面加上wx#
-例如wx#OPENID_#uid
-https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin 接口的请求参数openId#uid
-如果是APP抓包的写变量值前面加上app#
-抓包https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin 接口的请求参数token
-例如app#TOKEN_APP_
-
+微信小程序抓包的https://api.bckid.com.cn请求头authorization
 
 ⚠️【免责声明】
 ------------------------------------------
@@ -26,8 +20,8 @@ https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin
 */
 
 const { Env } = require("../tools/env")
-const $ = new Env("海底捞");
-let ckName = `hdl`;
+const $ = new Env("babycare");
+let ckName = `babycare`;
 const strSplitor = "#";
 process.env[ckName] = ""
 const axios = require("axios");
@@ -38,95 +32,35 @@ class Task {
     constructor(env) {
         this.index = $.userIdx++
         this.user = env.split(strSplitor);
-        this.tokenType = this.user[0];
-        this.openId = null
-        this.uid = null
-        this.token = null
-        this.valid = false;
-        this.name = ''
-        this.signinSource = ''
-        this.platformname = ''
+        this.token = this.user[0];
+
     }
 
     async run() {
-        if (this.tokenType == 'wx') {
-            this.platformname = 'wechat'
-            this.openId = this.user[1];
-            this.uid = this.user[2];
-            this.signinSource = 'MiniApp'
-            await this.wxLogin()
-            if (!this.valid) return;
 
-        }
-        if (this.tokenType == 'app') {
-            this.token = this.user[1];
-            this.signinSource = 'APP'
-            this.platformname = 'app'
-        }
         await this.info()
         await this.signIn()
     }
-    async wxLogin() {
-        try {
-            let options = {
-                url: "https://superapp-public.kiwa-tech.com/api/gateway/login/center/login/wechatLogin",
-                headers: {
-                    "_haidilao_app_token": "",
-                    "accept": "*/*",
-                    "accept-language": "zh-CN,zh;q=0.9",
-                    "appid": "15",
-                    "appname": "HDLMember",
-                    "appversion": "3.240.0",
-                    "content-type": "application/json",
-                    "platformname": this.platformname,
-                    "sec-fetch-dest": "empty",
-                    "sec-fetch-mode": "cors",
-                    "sec-fetch-site": "cross-site",
-                    "smdeviceid": "",
-                    "xweb_xhr": "1"
-                },
-                method: 'POST',
-                data: {
-                    "type": 1,
-                    "country": "CN",
-                    "codeType": 1,
-                    "business": "登录",
-                    "terminal": "会员小程序",
-                    "openId": "" + this.openId,
-                    "uid": "" + this.uid
-                }
-            }
-            let { data: result } = await axios.request(options);
-            if (result.code == 100000) {
-                this.token = result.data.token
-                this.name = result.data.nickName
-                $.log(`账号[${this.index}]【${this.name}】 登录成功`);
-                this.valid = true;
-            } else {
-                $.log(result);
-            }
 
-
-        } catch (e) {
-
-        } finally { }
-    }
     async signIn() {
         let options = {
-            url: 'https://superapp-public.kiwa-tech.com/activity/wxapp/signin/signin',
-            headers: {
-                "platformname": this.platformname,
-                '_haidilao_app_token': this.token,
-
-            },
             method: 'POST',
-            data: { "signinSource": this.signinSource }
-        }
+            url: `https://api.bckid.com.cn/operation/front/bonus/userSign/v3/sign`,
+            headers: {
+                'Host': 'api.bckid.com.cn',
+                'authorization': this.token,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
+            },
+            data: {
+
+            }
+        };
         let { data: result } = await axios.request(options);
-        if (result['success']) {
-            $.log(`账号[${this.index}]【${this.name}】 签到成功`);
+        if (result?.code == '200') {
+            //打印签到结果
+            $.log(`🌸账号[${this.index}]` + `🕊当前已签到${result.body.signDaysCountMod}天🎉`);
         } else {
-            $.log(result);
+            $.log(`🌸账号[${this.index}] 签到-失败:${result.message}❌`)
         }
 
 
@@ -135,19 +69,21 @@ class Task {
     }
     async info() {
         let options = {
-            url: 'https://superapp-public.kiwa-tech.com/activity/wxapp/signin/queryFragment',
+            url: 'https://api.bckid.com.cn/operation/front/bonus/userBonus/getUserBonus',
             headers: {
-                "platformname": this.platformname,
-                '_haidilao_app_token': this.token,
+                'Host': 'api.bckid.com.cn',
+                'authorization': this.token,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
             },
             method: 'POST',
             data: {}
         }
         let { data: result } = await axios.request(options);
-        if (result['success']) {
-            $.log(`账号[${this.index}]  剩余[${result.data.total}]本期碎片将于${result['data']['expireDate']}过期 `)
+        if (result?.code == '200') {
+            //打印签到结果
+            $.log(`🌸账号[${this.index}]` + `🕊账户当前积分[${result.body.userBonus}],历史积分[${result.body.sumBonus}]💰`);
         } else {
-            $.log(result);
+            $.log(`🌸账号[${this.index}]积分查询失败:${result.message}❌`)
         }
     }
 
