@@ -2,11 +2,10 @@
 ------------------------------------------
 @Author: sm
 @Date: 2024.06.07 19:15
-@Description: babycare
+@Description:  
 cron: 30 8 * * *
 ------------------------------------------
 #Notice:   
-微信小程序抓包的https://api.bckid.com.cn请求头authorization
 
 ⚠️【免责声明】
 ------------------------------------------
@@ -38,7 +37,6 @@ class Task {
 
     async run() {
 
-        await this.info()
         await this.signIn()
     }
 
@@ -67,25 +65,7 @@ class Task {
 
 
     }
-    async info() {
-        let options = {
-            url: 'https://api.bckid.com.cn/operation/front/bonus/userBonus/getUserBonus',
-            headers: {
-                'Host': 'api.bckid.com.cn',
-                'authorization': this.token,
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
-            },
-            method: 'POST',
-            data: {}
-        }
-        let { data: result } = await axios.request(options);
-        if (result?.code == '200') {
-            //打印签到结果
-            $.log(`🌸账号[${this.index}]` + `🕊账户当前积分[${result.body.userBonus}],历史积分[${result.body.sumBonus}]💰`);
-        } else {
-            $.log(`🌸账号[${this.index}]积分查询失败:${result.message}❌`)
-        }
-    }
+    
 
 
 
