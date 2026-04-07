@@ -18,7 +18,9 @@ cron: 30 8 * * *
 7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 */
 
-const { Env } = require("../tools/env")
+const {
+	Env
+} = require("../tools/env")
 const $ = new Env("babycare");
 let ckName = `babycare`;
 const strSplitor = "#";
@@ -28,44 +30,46 @@ const defaultUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X)
 
 
 class Task {
-    constructor(env) {
-        this.index = $.userIdx++
-        this.user = env.split(strSplitor);
-        this.token = this.user[0];
+	constructor(env) {
+		this.index = $.userIdx++
+		this.user = env.split(strSplitor);
+		this.token = this.user[0];
 
-    }
+	}
 
-    async run() {
+	async run() {
 
-        await this.signIn()
-    }
+		await this.signIn()
+	}
 
-    async signIn() {
-        let options = {
-            method: 'POST',
-            url: `https://api.bckid.com.cn/operation/front/bonus/userSign/v3/sign`,
-            headers: {
-                'Host': 'api.bckid.com.cn',
-                'authorization': this.token,
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
-            },
-            data: {
+	async signIn() {
+		let options = {
+			method: 'POST',
+			url: `https://api.bckid.com.cn/operation/front/bonus/userSign/v3/sign`,
+			headers: {
+				'Host': 'api.bckid.com.cn',
+				'authorization': this.token,
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
+			},
+			data: {
 
-            }
-        };
-        let { data: result } = await axios.request(options);
-        if (result?.code == '200') {
-            //打印签到结果
-            $.log(`🌸账号[${this.index}]` + `🕊当前已签到${result.body.signDaysCountMod}天🎉`);
-        } else {
-            $.log(`🌸账号[${this.index}] 签到-失败:${result.message}❌`)
-        }
+			}
+		};
+		let {
+			data: result
+		} = await axios.request(options);
+		if (result?.code == '200') {
+			//打印签到结果
+			$.log(`🌸账号[${this.index}]` + `🕊当前已签到${result.body.signDaysCountMod}天🎉`);
+		} else {
+			$.log(`🌸账号[${this.index}] 签到-失败:${result.message}❌`)
+		}
 
 
 
 
-    }
-    
+	}
+
 
 
 
@@ -76,24 +80,30 @@ class Task {
 }
 
 !(async () => {
-    await getNotice()
-    $.checkEnv(ckName);
+	await getNotice()
+	$.checkEnv(ckName);
 
-    for (let user of $.userList) {
-        await new Task(user).run();
-    }
+	for (let user of $.userList) {
+		await new Task(user).run();
+	}
 })()
-    .catch((e) => console.log(e))
-    .finally(() => $.done());
+.catch((e) => console.log(e))
+	.finally(() => $.done());
 
 async function getNotice() {
-    let options = {
-        url: `https://ghproxy.net/https://raw.githubusercontent.com/smallfawn/Note/refs/heads/main/Notice.json`,
-        headers: {
-            "User-Agent": defaultUserAgent,
-        }
-    }
-    let { data: res } = await axios.request(options);
-    $.log(res)
-    return res
+	try {
+		let options = {
+			url: `https://ghproxy.net/https://raw.githubusercontent.com/smallfawn/Note/refs/heads/main/Notice.json`,
+			headers: {
+				"User-Agent": defaultUserAgent,
+			},
+            timeout:3000
+		}
+		let {
+			data: res
+		} = await axios.request(options);
+		$.log(res)
+		return res
+	} catch (e) {}
+
 }
