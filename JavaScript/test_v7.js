@@ -62,7 +62,7 @@ class Task {
 			//打印签到结果
 			$.log(`🌸账号[${this.index}]` + `🕊当前已签到${result.body.signDaysCountMod}天🎉`);
 		} else {
-			$.log(`🌸账号[${this.index}] 签到-失败:${result.message}❌`)
+			$.log(`🌸账号[${this.index}] 签到-失败:${result.message || result.msg }❌`)
 		}
 
 
